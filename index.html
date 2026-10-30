@@ -7,7 +7,10 @@
   <meta name="theme-color" content="#000000">
   <meta name="description" content="Portfolio of Sugirvas Senthilkumar — Software Engineering and Cybersecurity.">
   <title>Sugirvas Senthilkumar — Portfolio</title>
-  <script>document.documentElement.classList.add('js');</script>
+
+  <script>
+    document.documentElement.classList.add("js");
+  </script>
 
   <style>
     :root {
@@ -26,7 +29,7 @@
       color: #fff;
     }
 
-    button { font: inherit; }
+    /* Existing homepage */
 
     #portfolio {
       min-height: 100svh;
@@ -51,6 +54,8 @@
       line-height: 1.8;
     }
 
+    /* Bootloader */
+
     #boot {
       display: none;
     }
@@ -73,7 +78,8 @@
       pointer-events: none;
     }
 
-    .boot-header, .boot-footer {
+    .boot-header,
+    .boot-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -87,7 +93,9 @@
       border-bottom: 1px solid #292929;
     }
 
-    .muted { color: #858585; }
+    .muted {
+      color: #858585;
+    }
 
     .boot-main {
       flex: 1;
@@ -181,32 +189,22 @@
       padding-top: 20px;
     }
 
-    .skip {
-      background: transparent;
-      color: #ddd;
-      border: 1px solid #555;
-      padding: 9px 13px;
-      font-size: 10px;
-      cursor: pointer;
-      letter-spacing: .1em;
-    }
-
-    .skip:hover, .skip:focus-visible {
-      background: #fff;
-      color: #000;
-    }
-
-    .skip:focus-visible {
-      outline: 2px solid #fff;
-      outline-offset: 3px;
-    }
-
     @media (max-width: 600px) {
-      .boot-header { font-size: 9px; }
-      .boot-footer { align-items: flex-end; }
-      .terminal { min-height: 205px; }
-      .boot-hash { font-size: 9px; }
-      .log-line { gap: 8px; }
+      .boot-header {
+        font-size: 9px;
+      }
+
+      .terminal {
+        min-height: 205px;
+      }
+
+      .boot-hash {
+        font-size: 9px;
+      }
+
+      .log-line {
+        gap: 8px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -219,39 +217,59 @@
 </head>
 
 <body>
-  <div id="boot" role="region" aria-label="Portfolio introduction">
+
+  <div id="boot" role="region"
+       aria-label="Portfolio introduction">
+
     <header class="boot-header">
       <span>SUGIRVAS / SYSTEM</span>
       <span class="muted">INITIALIZATION_01</span>
     </header>
 
-    <section class="boot-main" aria-label="System initialization">
-      <div class="eyebrow">SYSTEM / STARTUP SEQUENCE</div>
-      <h2 class="boot-title">INITIALIZING<br>INTERFACE<span aria-hidden="true">_</span></h2>
+    <section class="boot-main"
+             aria-label="System initialization">
 
-      <div class="terminal" id="logs" aria-hidden="true"></div>
+      <div class="eyebrow">
+        SYSTEM / STARTUP SEQUENCE
+      </div>
+
+      <h2 class="boot-title">
+        INITIALIZING<br>
+        INTERFACE<span aria-hidden="true">_</span>
+      </h2>
+
+      <div class="terminal" id="logs"
+           aria-hidden="true"></div>
 
       <div class="progress-meta">
         <span id="status">INITIALIZING</span>
         <span id="percent">000%</span>
       </div>
-      <div class="progress-track" role="progressbar"
+
+      <div class="progress-track"
+           role="progressbar"
            aria-label="Introduction progress"
-           aria-valuemin="0" aria-valuemax="100"
-           aria-valuenow="0" id="progress">
+           aria-valuemin="0"
+           aria-valuemax="100"
+           aria-valuenow="0"
+           id="progress">
+
         <div class="progress-fill" id="fill"></div>
       </div>
+
       <div class="boot-hash">
         IDENTITY_SIGNATURE / 0x5355474952564153
       </div>
+
     </section>
 
     <footer class="boot-footer">
-      <span class="muted">LOCAL PORTFOLIO INTERFACE / V1.0</span>
-      <button class="skip" id="skip" type="button">
-        SKIP INTRO →
-      </button>
+      <span class="muted">
+        LOCAL PORTFOLIO INTERFACE / V1.1
+      </span>
+      <span class="muted">S / S</span>
     </footer>
+
   </div>
 
   <main id="portfolio">
@@ -263,25 +281,24 @@
 
   <script>
     (() => {
-      const boot = document.getElementById('boot');
-      const logs = document.getElementById('logs');
-      const fill = document.getElementById('fill');
-      const percent = document.getElementById('percent');
-      const status = document.getElementById('status');
-      const progress = document.getElementById('progress');
-      const skip = document.getElementById('skip');
+      const boot = document.getElementById("boot");
+      const logs = document.getElementById("logs");
+      const fill = document.getElementById("fill");
+      const percent = document.getElementById("percent");
+      const status = document.getElementById("status");
+      const progress = document.getElementById("progress");
 
       const steps = [
-        ['00', 'INITIALIZING RUNTIME', 'OK'],
-        ['01', 'LOADING CORE MODULES', 'OK'],
-        ['02', 'RESOLVING IDENTITY', 'OK'],
-        ['03', 'PREPARING INTERFACE', 'OK'],
-        ['04', 'ESTABLISHING SESSION', 'OK'],
-        ['05', 'FINALIZING ENVIRONMENT', 'READY']
+        ["00", "INITIALIZING RUNTIME", "OK"],
+        ["01", "LOADING CORE MODULES", "OK"],
+        ["02", "RESOLVING IDENTITY", "OK"],
+        ["03", "PREPARING INTERFACE", "OK"],
+        ["04", "ESTABLISHING SESSION", "OK"],
+        ["05", "FINALIZING ENVIRONMENT", "READY"]
       ];
 
       const reducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
+        "(prefers-reduced-motion: reduce)"
       ).matches;
 
       let ended = false;
@@ -290,65 +307,80 @@
 
       function updateProgress(value) {
         const n = Math.min(100, Math.max(0, value));
-        fill.style.width = n + '%';
-        percent.textContent = String(n).padStart(3, '0') + '%';
-        progress.setAttribute('aria-valuenow', String(n));
+
+        fill.style.width = n + "%";
+        percent.textContent =
+          String(n).padStart(3, "0") + "%";
+
+        progress.setAttribute(
+          "aria-valuenow",
+          String(n)
+        );
       }
 
       function finish() {
         if (ended) return;
+
         ended = true;
         clearTimeout(timer);
+
         updateProgress(100);
-        status.textContent = 'SYSTEM READY';
-        boot.classList.add('finished');
-        skip.disabled = true;
+        status.textContent = "SYSTEM READY";
+
+        boot.classList.add("finished");
+
         window.setTimeout(() => {
-          boot.hidden = true;
           boot.remove();
         }, reducedMotion ? 0 : 700);
       }
 
       function next() {
         if (ended) return;
+
         if (current >= steps.length) {
-          status.textContent = 'ACCESS GRANTED';
+          status.textContent = "ACCESS GRANTED";
           timer = window.setTimeout(finish, 450);
           return;
         }
 
         const [id, message, result] = steps[current];
-        const line = document.createElement('div');
-        line.className = 'log-line';
 
-        const label = document.createElement('span');
+        const line = document.createElement("div");
+        line.className = "log-line";
+
+        const label = document.createElement("span");
         label.textContent = `[${id}] ${message}`;
 
-        const outcome = document.createElement('span');
+        const outcome = document.createElement("span");
         outcome.textContent = `[${result}]`;
 
         line.append(label, outcome);
         logs.appendChild(line);
 
         requestAnimationFrame(() => {
-          line.classList.add('visible');
+          line.classList.add("visible");
         });
 
         current += 1;
-        updateProgress(Math.round(current / steps.length * 100));
+
+        updateProgress(
+          Math.round(current / steps.length * 100)
+        );
+
         status.textContent = message;
 
         timer = window.setTimeout(next, 430);
       }
 
-      skip.addEventListener('click', finish);
+      // Always run the initialization sequence.
+      // Reduced motion only changes visual effects.
+      timer = window.setTimeout(
+        next,
+        reducedMotion ? 100 : 350
+      );
 
-      if (reducedMotion) {
-        finish();
-      } else {
-        timer = window.setTimeout(next, 350);
-      }
     })();
   </script>
+
 </body>
 </html>
