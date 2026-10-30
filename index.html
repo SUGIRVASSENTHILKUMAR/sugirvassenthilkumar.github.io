@@ -5,29 +5,350 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
-  <meta name="description" content="Official portfolio of Sugirvas Senthilkumar.">
-  <title>Sugirvas Senthilkumar | Portfolio</title>
+  <meta name="description" content="Portfolio of Sugirvas Senthilkumar — Software Engineering and Cybersecurity.">
+  <title>Sugirvas Senthilkumar — Portfolio</title>
+  <script>document.documentElement.classList.add('js');</script>
+
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      color-scheme: dark;
+      font-family: "SFMono-Regular", Consolas,
+        "Liberation Mono", monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      min-height: 100vh;
       background: #000;
       color: #fff;
-      font-family: system-ui, sans-serif;
+    }
+
+    button { font: inherit; }
+
+    #portfolio {
+      min-height: 100svh;
       display: grid;
       place-items: center;
-      text-align: center;
       padding: 24px;
+      text-align: center;
+      font-family: system-ui, sans-serif;
     }
-    h1 { font-size: clamp(2rem, 6vw, 4rem); margin: 0; }
-    p { color: #aaa; letter-spacing: 2px; }
+
+    #portfolio h1 {
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: -.035em;
+      line-height: 1.1;
+    }
+
+    #portfolio p {
+      color: #aaa;
+      letter-spacing: .16em;
+      font-size: .75rem;
+      line-height: 1.8;
+    }
+
+    #boot {
+      display: none;
+    }
+
+    .js #boot {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      background: #050505;
+      color: #f5f5f5;
+      padding: clamp(20px, 4vw, 56px);
+      transition: opacity .65s ease, visibility .65s ease;
+    }
+
+    .js #boot.finished {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .boot-header, .boot-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 10px;
+      letter-spacing: .1em;
+    }
+
+    .boot-header {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #292929;
+    }
+
+    .muted { color: #858585; }
+
+    .boot-main {
+      flex: 1;
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      color: #888;
+      letter-spacing: .16em;
+      margin-bottom: 22px;
+    }
+
+    .boot-title {
+      font-family: inherit;
+      font-size: clamp(24px, 5vw, 48px);
+      line-height: 1.15;
+      letter-spacing: -.055em;
+      font-weight: 500;
+      margin: 0 0 34px;
+    }
+
+    .terminal {
+      min-height: 185px;
+      padding: 22px 0;
+      border-top: 1px solid #303030;
+      border-bottom: 1px solid #303030;
+      font-size: clamp(10px, 1.5vw, 12px);
+      line-height: 2.1;
+    }
+
+    .log-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .log-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .log-line span:last-child {
+      color: #aaa;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 10px;
+      color: #aaa;
+      margin-top: 26px;
+      margin-bottom: 12px;
+      letter-spacing: .1em;
+    }
+
+    .progress-track {
+      height: 2px;
+      background: #262626;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: #fff;
+      transition: width .3s ease;
+    }
+
+    .boot-hash {
+      margin-top: 20px;
+      color: #777;
+      font-size: 10px;
+      letter-spacing: .08em;
+      overflow-wrap: anywhere;
+    }
+
+    .boot-footer {
+      border-top: 1px solid #292929;
+      padding-top: 20px;
+    }
+
+    .skip {
+      background: transparent;
+      color: #ddd;
+      border: 1px solid #555;
+      padding: 9px 13px;
+      font-size: 10px;
+      cursor: pointer;
+      letter-spacing: .1em;
+    }
+
+    .skip:hover, .skip:focus-visible {
+      background: #fff;
+      color: #000;
+    }
+
+    .skip:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 600px) {
+      .boot-header { font-size: 9px; }
+      .boot-footer { align-items: flex-end; }
+      .terminal { min-height: 205px; }
+      .boot-hash { font-size: 9px; }
+      .log-line { gap: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <main>
-    <h1>SUGIRVAS SENTHILKUMAR</h1>
-    <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
+  <div id="boot" role="region" aria-label="Portfolio introduction">
+    <header class="boot-header">
+      <span>SUGIRVAS / SYSTEM</span>
+      <span class="muted">INITIALIZATION_01</span>
+    </header>
+
+    <section class="boot-main" aria-label="System initialization">
+      <div class="eyebrow">SYSTEM / STARTUP SEQUENCE</div>
+      <h2 class="boot-title">INITIALIZING<br>INTERFACE<span aria-hidden="true">_</span></h2>
+
+      <div class="terminal" id="logs" aria-hidden="true"></div>
+
+      <div class="progress-meta">
+        <span id="status">INITIALIZING</span>
+        <span id="percent">000%</span>
+      </div>
+      <div class="progress-track" role="progressbar"
+           aria-label="Introduction progress"
+           aria-valuemin="0" aria-valuemax="100"
+           aria-valuenow="0" id="progress">
+        <div class="progress-fill" id="fill"></div>
+      </div>
+      <div class="boot-hash">
+        IDENTITY_SIGNATURE / 0x5355474952564153
+      </div>
+    </section>
+
+    <footer class="boot-footer">
+      <span class="muted">LOCAL PORTFOLIO INTERFACE / V1.0</span>
+      <button class="skip" id="skip" type="button">
+        SKIP INTRO →
+      </button>
+    </footer>
+  </div>
+
+  <main id="portfolio">
+    <div>
+      <h1>SUGIRVAS SENTHILKUMAR</h1>
+      <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
+    </div>
   </main>
+
+  <script>
+    (() => {
+      const boot = document.getElementById('boot');
+      const logs = document.getElementById('logs');
+      const fill = document.getElementById('fill');
+      const percent = document.getElementById('percent');
+      const status = document.getElementById('status');
+      const progress = document.getElementById('progress');
+      const skip = document.getElementById('skip');
+
+      const steps = [
+        ['00', 'INITIALIZING RUNTIME', 'OK'],
+        ['01', 'LOADING CORE MODULES', 'OK'],
+        ['02', 'RESOLVING IDENTITY', 'OK'],
+        ['03', 'PREPARING INTERFACE', 'OK'],
+        ['04', 'ESTABLISHING SESSION', 'OK'],
+        ['05', 'FINALIZING ENVIRONMENT', 'READY']
+      ];
+
+      const reducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+
+      let ended = false;
+      let current = 0;
+      let timer;
+
+      function updateProgress(value) {
+        const n = Math.min(100, Math.max(0, value));
+        fill.style.width = n + '%';
+        percent.textContent = String(n).padStart(3, '0') + '%';
+        progress.setAttribute('aria-valuenow', String(n));
+      }
+
+      function finish() {
+        if (ended) return;
+        ended = true;
+        clearTimeout(timer);
+        updateProgress(100);
+        status.textContent = 'SYSTEM READY';
+        boot.classList.add('finished');
+        skip.disabled = true;
+        window.setTimeout(() => {
+          boot.hidden = true;
+          boot.remove();
+        }, reducedMotion ? 0 : 700);
+      }
+
+      function next() {
+        if (ended) return;
+        if (current >= steps.length) {
+          status.textContent = 'ACCESS GRANTED';
+          timer = window.setTimeout(finish, 450);
+          return;
+        }
+
+        const [id, message, result] = steps[current];
+        const line = document.createElement('div');
+        line.className = 'log-line';
+
+        const label = document.createElement('span');
+        label.textContent = `[${id}] ${message}`;
+
+        const outcome = document.createElement('span');
+        outcome.textContent = `[${result}]`;
+
+        line.append(label, outcome);
+        logs.appendChild(line);
+
+        requestAnimationFrame(() => {
+          line.classList.add('visible');
+        });
+
+        current += 1;
+        updateProgress(Math.round(current / steps.length * 100));
+        status.textContent = message;
+
+        timer = window.setTimeout(next, 430);
+      }
+
+      skip.addEventListener('click', finish);
+
+      if (reducedMotion) {
+        finish();
+      } else {
+        timer = window.setTimeout(next, 350);
+      }
+    })();
+  </script>
 </body>
 </html>
