@@ -1,349 +1,352 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#000000">
-  <meta name="description" content="Portfolio of Sugirvas Senthilkumar — Software Engineering and Cybersecurity.">
-  <title>Sugirvas Senthilkumar — Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Sugirvas Senthilkumar — Software Engineering and Cybersecurity">
+<title>Sugirvas Senthilkumar</title>
 
-  <script>
-    document.documentElement.classList.add("js");
-  </script>
+<script>
+document.documentElement.classList.add("js");
+</script>
 
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #000000;
-      --panel: #050505;
-      --border: #1b1b1b;
-      --text: #f5f5f5;
-      --muted: #8c8c8c;
-      --soft: #2b2b2b;
-    }
+<style>
+:root {
+  color-scheme: dark;
+  --black: #000;
+  --white: #f2f2f2;
+  --gray: #8a8a8a;
+  --mono: "SFMono-Regular", Menlo, Monaco,
+    Consolas, "Liberation Mono", monospace;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+* { box-sizing: border-box; }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-    }
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--black);
+  color: var(--white);
+}
 
-    body {
-      overflow: hidden;
-      font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    }
+body { font-family: var(--mono); }
 
-    /* HERO */
-    #hero {
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      text-align: center;
-      background: #000;
-      color: #fff;
-      opacity: 0;
-      transition: opacity 900ms ease;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+#portfolio {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
 
-    #hero.show {
-      opacity: 1;
-    }
+#portfolio h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 4rem);
+  letter-spacing: -.04em;
+}
 
-    .hero-wrap h1 {
-      margin: 0;
-      font-size: clamp(2rem, 5vw, 4.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-      font-weight: 600;
-    }
+#portfolio p {
+  color: #aaa;
+  font-size: .76rem;
+  letter-spacing: .17em;
+  line-height: 1.8;
+}
 
-    .hero-wrap p {
-      margin: 14px 0 0;
-      color: #9d9d9d;
-      font-size: 0.76rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
+.js #portfolio {
+  visibility: hidden;
+}
 
-    /* TERMINAL BOOT */
-    #boot {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      z-index: 999;
-      opacity: 1;
-      transition: opacity 700ms ease, visibility 700ms ease;
-    }
+.js #portfolio.unlocked {
+  visibility: visible;
+  animation: reveal .65s ease both;
+}
 
-    #boot.finished {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+#boot {
+  display: none;
+}
 
-    .terminal {
-      width: min(1100px, 100%);
-      height: min(680px, calc(100svh - 48px));
-      background: var(--panel);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+.js #boot {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  overflow: hidden;
+  transition: opacity .55s ease;
+}
 
-    .terminal-top {
-      height: 42px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      padding: 0 14px;
-      gap: 8px;
-      flex-shrink: 0;
-    }
+.js #boot.exit {
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #5f5f5f;
-      opacity: 0.85;
-    }
+.console {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(18px, 3vw, 48px);
+  font-size: clamp(11px, 1.15vw, 14px);
+  line-height: 1.72;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #000;
+}
 
-    .terminal-title {
-      margin-left: 8px;
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+#output {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
 
-    .terminal-body {
-      flex: 1;
-      padding: 18px 18px 24px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0));
-    }
+.line {
+  min-height: 1.72em;
+}
 
-    .terminal-screen {
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.75;
-      font-size: clamp(12px, 1.45vw, 15px);
-      color: var(--text);
-      min-height: 100%;
-    }
+.dim { color: var(--gray); }
+.bright { color: #fff; }
+.ok { color: #e0e0e0; }
 
-    .line {
-      display: block;
-    }
+.prompt {
+  display: none;
+  margin-top: 1.5em;
+}
 
-    .dim {
-      color: var(--muted);
-    }
+.prompt.ready { display: block; }
 
-    .ok {
-      color: #ffffff;
-    }
+.command {
+  color: #fff;
+  margin-bottom: 1em;
+}
 
-    .cursor {
-      display: inline-block;
-      width: 0.62em;
-      height: 1.1em;
-      background: #fff;
-      vertical-align: -0.18em;
-      margin-left: 2px;
-      animation: blink 1s steps(1, end) infinite;
-    }
+.enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  color: #fff;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.8;
+}
 
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
+.enter:focus-visible {
+  outline: 1px solid white;
+  outline-offset: 5px;
+}
 
-    @media (max-width: 640px) {
-      #boot {
-        padding: 12px;
-      }
+.cursor {
+  display: inline-block;
+  width: .65em;
+  height: 1.12em;
+  background: #fff;
+  vertical-align: -.19em;
+  animation: blink 1s steps(1) infinite;
+}
 
-      .terminal {
-        height: calc(100svh - 24px);
-      }
+@keyframes blink {
+  50% { opacity: 0; }
+}
 
-      .terminal-top {
-        height: 40px;
-      }
+@keyframes reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-      .terminal-body {
-        padding: 14px;
-      }
-    }
+@media (max-width: 600px) {
+  .console {
+    padding: 20px 15px;
+    font-size: 11px;
+    line-height: 1.65;
+  }
+}
 
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-  </style>
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <section id="boot" aria-label="Boot sequence">
-    <div class="terminal" role="img" aria-label="Terminal boot sequence">
-      <div class="terminal-top">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="terminal-title">sugirvas@system:~ / secure-init</span>
+<section id="boot" aria-label="Terminal initialization">
+  <div class="console" id="console">
+    <div id="output" aria-hidden="true"></div>
+
+    <div class="prompt" id="prompt">
+      <div class="command">
+        root@sugirvas:~# ./enter_portfolio
       </div>
-      <div class="terminal-body">
-        <div id="terminalScreen" class="terminal-screen"></div>
-      </div>
+      <button class="enter" id="enter" type="button">
+        <span>Press ENTER to access portfolio</span>
+        <span class="cursor" aria-hidden="true"></span>
+      </button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <main id="hero" aria-label="Homepage">
-    <div class="hero-wrap">
-      <h1>SUGIRVAS SENTHILKUMAR</h1>
-      <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
-    </div>
-  </main>
+<main id="portfolio">
+  <div>
+    <h1>SUGIRVAS SENTHILKUMAR</h1>
+    <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
+  </div>
+</main>
 
-  <script>
-    (() => {
-      const boot = document.getElementById("boot");
-      const hero = document.getElementById("hero");
-      const screen = document.getElementById("terminalScreen");
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+<script>
+(() => {
+  "use strict";
 
-      const lines = [
-        "> boot sequence initiated",
-        "> loading secure runtime modules",
-        "[ok] runtime modules loaded",
-        "",
-        "> mounting operator environment",
-        "[ok] environment mounted",
-        "",
-        "> resolving identity registry",
-        "[ok] identity resolved :: SUGIRVAS SENTHILKUMAR",
-        "",
-        "> decrypting portfolio interface",
-        "[ok] interface decrypted",
-        "",
-        "> loading communication layers",
-        "[ok] communication layers active",
-        "",
-        "> verifying system integrity",
-        "[ok] integrity check complete",
-        "",
-        "> establishing session",
-        "[ok] session established",
-        "",
-        "> access level: authorized",
-        "> status: system ready",
-        "",
-        "> launching portfolio..."
-      ];
+  const boot = document.getElementById("boot");
+  const output = document.getElementById("output");
+  const consoleView = document.getElementById("console");
+  const prompt = document.getElementById("prompt");
+  const enter = document.getElementById("enter");
+  const portfolio = document.getElementById("portfolio");
 
-      let currentLine = 0;
-      let isFinished = false;
+  const reducedMotion = matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-      const charDelay = reducedMotion ? 0 : 18;
-      const lineDelay = reducedMotion ? 60 : 180;
-      const finalDelay = reducedMotion ? 180 : 850;
+  let completed = false;
+  let unlocked = false;
+  let time = 0;
 
-      function renderCursor() {
-        if (isFinished) return;
-        const oldCursor = screen.querySelector(".cursor");
-        if (oldCursor) oldCursor.remove();
+  // Fictional boot telemetry for visual presentation.
+  // No real kernel or security tests are performed.
+  const sequence = [
+    ["SUGIRVAS SYSTEM CONSOLE", "bright", 500],
+    ["BOOTLOADER / OPERATOR ENVIRONMENT", "dim", 450],
+    ["", "", 400],
 
-        const cursor = document.createElement("span");
-        cursor.className = "cursor";
-        screen.appendChild(cursor);
-      }
+    ["Initializing system runtime...", "", 650],
+    ["Detecting system architecture...", "", 550],
+    ["Architecture: x86_64 / simulated", "dim", 450],
+    ["Loading initialization modules...", "", 700],
+    ["Memory subsystem initialized", "ok", 450],
+    ["Allocating interface memory...", "", 550],
+    ["Runtime memory allocation complete", "ok", 450],
+    ["", "", 400],
 
-      function appendLine(text = "") {
-        const line = document.createElement("span");
-        line.className = "line";
-        screen.appendChild(line);
-        return line;
-      }
+    ["[ CORE ] Initializing system services", "bright", 600],
+    ["[  OK  ] Runtime environment loaded", "ok", 500],
+    ["[  OK  ] Interface components registered", "ok", 550],
+    ["[  OK  ] Resource mappings initialized", "ok", 500],
+    ["[  OK  ] Local execution context ready", "ok", 600],
+    ["", "", 500],
 
-      function typeText(element, text, index = 0) {
-        return new Promise((resolve) => {
-          if (charDelay === 0) {
-            element.textContent = text;
-            resolve();
-            return;
-          }
+    ["[ SEC  ] Loading security interface", "bright", 650],
+    ["[  OK  ] Security module definitions loaded", "ok", 550],
+    ["[  OK  ] Configuration registry parsed", "ok", 550],
+    ["[  OK  ] Local interface policy initialized", "ok", 550],
+    ["[  OK  ] Integrity simulation complete", "ok", 650],
+    ["", "", 500],
 
-          function step() {
-            element.textContent += text.charAt(index);
-            index += 1;
+    ["[ ID   ] Resolving operator identity", "bright", 750],
+    ["Identity identifier: 0x5355474952564153", "dim", 550],
+    ["Operator: SUGIRVAS SENTHILKUMAR", "bright", 650],
+    ["Domain: SOFTWARE ENGINEERING", "", 500],
+    ["Specialization: CYBERSECURITY", "", 550],
+    ["Identity context registered", "ok", 650],
+    ["", "", 500],
 
-            if (index < text.length) {
-              setTimeout(step, charDelay);
-            } else {
-              resolve();
-            }
-          }
+    ["[ SYS  ] Mounting portfolio environment", "bright", 700],
+    ["Loading project registry...", "", 550],
+    ["Registering CYBER FEED...", "", 450],
+    ["Registering SUGISOC...", "", 450],
+    ["Registering SUGISCOPE...", "", 450],
+    ["Preparing presentation layer...", "", 650],
+    ["[  OK  ] Interface components available", "ok", 650],
+    ["", "", 400],
 
-          step();
-        });
-      }
+    ["[ FINAL ] Running startup diagnostics", "bright", 700],
+    ["Checking display configuration...", "", 500],
+    ["Monochrome display profile: ACTIVE", "ok", 550],
+    ["Loading interaction handlers...", "", 600],
+    ["Preparing terminal handoff...", "", 750],
+    ["[  OK  ] Initialization complete", "ok", 650],
+    ["", "", 500],
+    ["SYSTEM READY.", "bright", 800],
+    ["", "", 300]
+  ];
 
-      async function runBoot() {
-        for (currentLine = 0; currentLine < lines.length; currentLine++) {
-          const content = lines[currentLine];
-          const lineEl = appendLine("");
+  const delay = (ms) =>
+    new Promise(resolve => setTimeout(resolve, ms));
 
-          renderCursor();
+  function scrollBottom() {
+    consoleView.scrollTop = consoleView.scrollHeight;
+  }
 
-          await typeText(lineEl, content);
+  function addLine(message, style) {
+    const line = document.createElement("div");
+    line.className = "line";
 
-          renderCursor();
+    if (style) line.classList.add(style);
 
-          await new Promise((resolve) =>
-            setTimeout(resolve, content === "" ? 45 : lineDelay)
-          );
-        }
+    if (message === "") {
+      line.textContent = "\u00a0";
+    } else {
+      const stamp = (time / 1000).toFixed(6)
+        .padStart(11, " ");
 
-        isFinished = true;
+      line.textContent = `[${stamp}] ${message}`;
+    }
 
-        const cursor = screen.querySelector(".cursor");
-        if (cursor) cursor.remove();
+    output.appendChild(line);
+    scrollBottom();
+  }
 
-        await new Promise((resolve) => setTimeout(resolve, finalDelay));
+  async function runBoot() {
+    for (const [message, style, duration] of sequence) {
+      addLine(message, style);
 
-        boot.classList.add("finished");
-        hero.classList.add("show");
+      time += duration;
+      await delay(duration);
+    }
 
-        setTimeout(() => {
-          boot.remove();
-          document.body.style.overflow = "";
-        }, reducedMotion ? 0 : 800);
-      }
+    completed = true;
+    prompt.classList.add("ready");
+    scrollBottom();
+    enter.focus({ preventScroll: true });
+  }
 
-      runBoot();
-    })();
-  </script>
+  function openPortfolio() {
+    if (!completed || unlocked) return;
+
+    unlocked = true;
+
+    portfolio.classList.add("unlocked");
+    boot.classList.add("exit");
+
+    const removeDelay = reducedMotion ? 0 : 600;
+
+    setTimeout(() => {
+      boot.remove();
+      document.getElementById("portfolio")
+        .setAttribute("tabindex", "-1");
+      portfolio.focus({ preventScroll: true });
+    }, removeDelay);
+  }
+
+  enter.addEventListener("click", openPortfolio);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && completed && !unlocked) {
+      event.preventDefault();
+      openPortfolio();
+    }
+  });
+
+  runBoot();
+})();
+</script>
+
 </body>
 </html>
