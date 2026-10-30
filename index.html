@@ -7,32 +7,26 @@
 <meta name="theme-color" content="#000000">
 <meta name="description" content="Portfolio of Sugirvas Senthilkumar">
 <title>Sugirvas Senthilkumar</title>
-
-<script>
-  document.documentElement.classList.add("js");
-</script>
-
+<script>document.documentElement.classList.add("js");</script>
 <style>
 :root {
   color-scheme: dark;
   --bg: #000;
-  --fg: #f5f5f5;
-  --muted: #999;
+  --fg: #ededed;
+  --muted: #898989;
   --mono: "SFMono-Regular", Menlo, Monaco,
-    Consolas, "Liberation Mono", monospace;
+          Consolas, "Liberation Mono", monospace;
 }
-
 * { box-sizing: border-box; }
-
 html, body {
   margin: 0;
   min-height: 100%;
   background: var(--bg);
   color: var(--fg);
 }
-
 body { font-family: var(--mono); }
 
+/* Portfolio */
 #portfolio {
   min-height: 100svh;
   display: grid;
@@ -41,129 +35,115 @@ body { font-family: var(--mono); }
   text-align: center;
   font-family: system-ui, sans-serif;
 }
-
 #portfolio h1 {
   margin: 0;
   font-size: clamp(2rem, 6vw, 4rem);
   letter-spacing: -.04em;
   line-height: 1.1;
 }
-
 #portfolio p {
   color: #aaa;
   font-size: .76rem;
   letter-spacing: .17em;
   line-height: 1.8;
 }
-
-.js #portfolio {
-  visibility: hidden;
-}
-
+.js #portfolio { visibility: hidden; }
 .js #portfolio.unlocked {
   visibility: visible;
-  animation: reveal .55s ease both;
+  animation: reveal .5s ease both;
 }
 
+/* Full-screen terminal */
 #boot { display: none; }
-
 .js #boot {
   position: fixed;
   inset: 0;
   z-index: 100;
   display: flex;
-  flex-direction: column;
   background: #000;
   overflow: hidden;
   transition: opacity .45s ease;
 }
-
 .js #boot.exit {
   opacity: 0;
   pointer-events: none;
 }
-
 .console {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: clamp(20px, 3vw, 48px);
-  font-size: clamp(11px, 1.08vw, 14px);
-  line-height: 1.8;
+  padding: clamp(24px, 4vw, 60px);
   scrollbar-width: thin;
   scrollbar-color: #333 #000;
 }
-
+.console-content {
+  width: 100%;
+  max-width: 1100px;
+}
 #output {
+  font-size: clamp(11px, 1.05vw, 14px);
+  line-height: 1.9;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   font-variant-numeric: tabular-nums;
 }
-
-.line { min-height: 1.8em; }
-.dim { color: #888; }
+.line { min-height: 1.9em; }
+.dim { color: var(--muted); }
 .bright { color: #fff; }
-.ok { color: #dadada; }
+.status { color: #dadada; }
+.separator { color: #464646; }
 
 .prompt {
   display: none;
-  margin-top: 1.5em;
+  margin-top: 24px;
+  font-size: clamp(11px, 1.05vw, 14px);
+  line-height: 2;
 }
-
 .prompt.ready { display: block; }
-
-.command {
-  color: #fff;
-  margin-bottom: .7em;
-}
+.command { margin-bottom: 10px; }
+.command-prefix { color: #999; }
 
 .enter {
   display: inline-flex;
-  align-items: center;
   gap: 10px;
-  color: white;
+  align-items: center;
   padding: 5px 0;
   background: none;
-  border: none;
+  border: 0;
+  color: #fff;
   cursor: pointer;
-  font: inherit;
   text-align: left;
-  line-height: 1.7;
+  font: inherit;
+  letter-spacing: .025em;
 }
-
 .enter:hover { color: #ccc; }
-
 .enter:focus-visible {
-  outline: 1px solid white;
+  outline: 1px solid #fff;
   outline-offset: 5px;
 }
-
 .cursor {
   display: inline-block;
   width: .65em;
   height: 1.05em;
-  background: white;
+  background: #fff;
   vertical-align: -.16em;
   animation: blink 1s steps(1) infinite;
 }
-
 @keyframes blink {
   50% { opacity: 0; }
 }
-
 @keyframes reveal {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 @media (max-width: 600px) {
-  .console {
-    padding: 20px 15px;
+  .console { padding: 24px 16px; }
+  #output, .prompt {
     font-size: 11px;
-    line-height: 1.65;
+    line-height: 1.7;
   }
+  .line { min-height: 1.7em; }
 }
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -172,22 +152,23 @@ body { font-family: var(--mono); }
 }
 </style>
 </head>
-
 <body>
 
-<section id="boot" aria-label="Terminal initialization">
+<section id="boot" aria-label="Operations console initialization">
   <div class="console" id="console">
-    <div id="output" aria-hidden="true"></div>
+    <div class="console-content">
+      <div id="output" aria-hidden="true"></div>
 
-    <div class="prompt" id="prompt">
-      <div class="command">
-        system@localhost:~$ ./launch
+      <div class="prompt" id="prompt">
+        <div class="command">
+          <span class="command-prefix">operator@console:~$</span>
+          ./launch
+        </div>
+        <button id="enter" class="enter" type="button">
+          <span>Press ENTER to continue</span>
+          <span class="cursor" aria-hidden="true"></span>
+        </button>
       </div>
-
-      <button class="enter" id="enter" type="button">
-        <span>Press ENTER to continue</span>
-        <span class="cursor" aria-hidden="true"></span>
-      </button>
     </div>
   </div>
 </section>
@@ -210,82 +191,77 @@ body { font-family: var(--mono); }
   const enter = document.getElementById("enter");
   const portfolio = document.getElementById("portfolio");
 
-  const reducedMotion = matchMedia(
+  const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
   let completed = false;
   let unlocked = false;
-  let elapsed = 0;
 
-  // Simulated terminal output for visual presentation.
-  // Not an actual operating-system boot.
-
+  // Fictional operations-console initialization.
+  // These messages do not represent real security checks.
   const sequence = [
-    ["[    0.000000] Boot sequence initiated", "bright", 330],
-    ["[    0.000112] Initializing runtime environment", "", 390],
-    ["[    0.000521] Loading core execution context", "", 380],
-    ["[    0.001204] Memory allocation complete", "dim", 350],
-    ["[    0.002411] Registering subsystem interfaces", "", 420],
-    ["[    0.003119] Initializing process scheduler", "", 390],
-    ["[    0.004872] Mounting virtual filesystem", "", 400],
-    ["[    0.006218] Runtime services available", "dim", 350],
-    ["", "", 200],
+    ["OPERATIONS CONSOLE", "bright", 500],
+    ["INITIALIZATION SEQUENCE / LOCAL RUNTIME", "dim", 400],
+    ["──────────────────────────────────────", "separator", 300],
+    ["", "", 250],
 
-    [":: Loading system components", "bright", 430],
-    ["   [ OK ] Runtime configuration", "ok", 350],
-    ["   [ OK ] Resource initialization", "ok", 350],
-    ["   [ OK ] Interface dependencies", "ok", 360],
-    ["   [ OK ] Execution environment", "ok", 360],
-    ["", "", 200],
+    ["> initializing execution environment", "", 450],
+    ["> loading system configuration", "", 400],
+    ["> allocating runtime resources", "", 420],
+    ["> resolving interface dependencies", "", 400],
+    ["> mounting operational workspace", "", 450],
+    ["", "", 250],
 
-    [":: Initializing console services", "bright", 430],
-    ["   [ OK ] Standard input/output", "ok", 350],
-    ["   [ OK ] Terminal session", "ok", 350],
-    ["   [ OK ] Display context", "ok", 350],
-    ["", "", 200],
+    ["  [ OK ] execution context initialized", "status", 370],
+    ["  [ OK ] runtime dependencies resolved", "status", 370],
+    ["  [ OK ] workspace mounted", "status", 380],
+    ["", "", 250],
 
-    [":: Starting application runtime", "bright", 450],
-    ["   [ OK ] Asset registry", "ok", 350],
-    ["   [ OK ] Interface renderer", "ok", 350],
-    ["   [ OK ] Event handlers", "ok", 350],
-    ["   [ OK ] Application environment", "ok", 420],
-    ["", "", 200],
+    ["> initializing console subsystem", "", 450],
+    ["> establishing local session context", "", 450],
+    ["> preparing interaction layer", "", 420],
+    ["", "", 250],
 
-    ["[ SYSTEM ] Initialization complete.", "bright", 600],
-    ["[ STATUS ] READY", "bright", 450],
-    ["", "", 250]
+    ["  [ OK ] console session initialized", "status", 400],
+    ["  [ OK ] display interface available", "status", 400],
+    ["  [ OK ] runtime services operational", "status", 450],
+    ["", "", 250],
+
+    ["> finalizing system initialization", "", 500],
+    ["> releasing application interface", "", 450],
+    ["", "", 250],
+    ["STATUS ........................ READY", "bright", 500],
+    ["──────────────────────────────────────", "separator", 300]
   ];
 
-  const delay = ms =>
+  const delay = (ms) =>
     new Promise(resolve => setTimeout(resolve, ms));
 
   function scrollBottom() {
     consoleView.scrollTop = consoleView.scrollHeight;
   }
 
-  function addLine(message, style) {
+  function appendLine(message, style) {
     const line = document.createElement("div");
     line.className = "line";
 
     if (style) line.classList.add(style);
-
     line.textContent = message || "\u00a0";
+
     output.appendChild(line);
     scrollBottom();
   }
 
   async function runBoot() {
     for (const [message, style, duration] of sequence) {
-      addLine(message, style);
-      elapsed += duration;
+      appendLine(message, style);
       await delay(duration);
     }
 
     completed = true;
     prompt.classList.add("ready");
     scrollBottom();
-
     enter.focus({ preventScroll: true });
   }
 
@@ -293,28 +269,20 @@ body { font-family: var(--mono); }
     if (!completed || unlocked) return;
 
     unlocked = true;
-
     portfolio.classList.add("unlocked");
     boot.classList.add("exit");
 
-    const fadeDuration = reducedMotion ? 0 : 500;
-
-    setTimeout(() => {
+    window.setTimeout(() => {
       boot.remove();
-
       portfolio.setAttribute("tabindex", "-1");
       portfolio.focus({ preventScroll: true });
-    }, fadeDuration);
+    }, reducedMotion ? 0 : 500);
   }
 
   enter.addEventListener("click", openPortfolio);
 
-  document.addEventListener("keydown", event => {
-    if (
-      event.key === "Enter" &&
-      completed &&
-      !unlocked
-    ) {
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && completed && !unlocked) {
       event.preventDefault();
       openPortfolio();
     }
@@ -323,6 +291,5 @@ body { font-family: var(--mono); }
   runBoot();
 })();
 </script>
-
 </body>
 </html>
