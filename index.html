@@ -5,19 +5,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#000000">
-<meta name="description" content="Sugirvas Senthilkumar — Software Engineering and Cybersecurity">
+<meta name="description" content="Portfolio of Sugirvas Senthilkumar">
 <title>Sugirvas Senthilkumar</title>
 
 <script>
-document.documentElement.classList.add("js");
+  document.documentElement.classList.add("js");
 </script>
 
 <style>
 :root {
   color-scheme: dark;
-  --black: #000;
-  --white: #f2f2f2;
-  --gray: #8a8a8a;
+  --bg: #000;
+  --fg: #f5f5f5;
+  --muted: #999;
   --mono: "SFMono-Regular", Menlo, Monaco,
     Consolas, "Liberation Mono", monospace;
 }
@@ -27,8 +27,8 @@ document.documentElement.classList.add("js");
 html, body {
   margin: 0;
   min-height: 100%;
-  background: var(--black);
-  color: var(--white);
+  background: var(--bg);
+  color: var(--fg);
 }
 
 body { font-family: var(--mono); }
@@ -46,6 +46,7 @@ body { font-family: var(--mono); }
   margin: 0;
   font-size: clamp(2rem, 6vw, 4rem);
   letter-spacing: -.04em;
+  line-height: 1.1;
 }
 
 #portfolio p {
@@ -61,12 +62,10 @@ body { font-family: var(--mono); }
 
 .js #portfolio.unlocked {
   visibility: visible;
-  animation: reveal .65s ease both;
+  animation: reveal .55s ease both;
 }
 
-#boot {
-  display: none;
-}
+#boot { display: none; }
 
 .js #boot {
   position: fixed;
@@ -76,7 +75,7 @@ body { font-family: var(--mono); }
   flex-direction: column;
   background: #000;
   overflow: hidden;
-  transition: opacity .55s ease;
+  transition: opacity .45s ease;
 }
 
 .js #boot.exit {
@@ -88,9 +87,9 @@ body { font-family: var(--mono); }
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: clamp(18px, 3vw, 48px);
-  font-size: clamp(11px, 1.15vw, 14px);
-  line-height: 1.72;
+  padding: clamp(20px, 3vw, 48px);
+  font-size: clamp(11px, 1.08vw, 14px);
+  line-height: 1.8;
   scrollbar-width: thin;
   scrollbar-color: #333 #000;
 }
@@ -101,13 +100,10 @@ body { font-family: var(--mono); }
   font-variant-numeric: tabular-nums;
 }
 
-.line {
-  min-height: 1.72em;
-}
-
-.dim { color: var(--gray); }
+.line { min-height: 1.8em; }
+.dim { color: #888; }
 .bright { color: #fff; }
-.ok { color: #e0e0e0; }
+.ok { color: #dadada; }
 
 .prompt {
   display: none;
@@ -118,22 +114,24 @@ body { font-family: var(--mono); }
 
 .command {
   color: #fff;
-  margin-bottom: 1em;
+  margin-bottom: .7em;
 }
 
 .enter {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 0;
-  color: #fff;
-  background: transparent;
-  border: 0;
+  gap: 10px;
+  color: white;
+  padding: 5px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
   font: inherit;
   text-align: left;
-  cursor: pointer;
-  line-height: 1.8;
+  line-height: 1.7;
 }
+
+.enter:hover { color: #ccc; }
 
 .enter:focus-visible {
   outline: 1px solid white;
@@ -143,9 +141,9 @@ body { font-family: var(--mono); }
 .cursor {
   display: inline-block;
   width: .65em;
-  height: 1.12em;
-  background: #fff;
-  vertical-align: -.19em;
+  height: 1.05em;
+  background: white;
+  vertical-align: -.16em;
   animation: blink 1s steps(1) infinite;
 }
 
@@ -183,10 +181,11 @@ body { font-family: var(--mono); }
 
     <div class="prompt" id="prompt">
       <div class="command">
-        root@sugirvas:~# ./enter_portfolio
+        system@localhost:~$ ./launch
       </div>
+
       <button class="enter" id="enter" type="button">
-        <span>Press ENTER to access portfolio</span>
+        <span>Press ENTER to continue</span>
         <span class="cursor" aria-hidden="true"></span>
       </button>
     </div>
@@ -217,67 +216,48 @@ body { font-family: var(--mono); }
 
   let completed = false;
   let unlocked = false;
-  let time = 0;
+  let elapsed = 0;
 
-  // Fictional boot telemetry for visual presentation.
-  // No real kernel or security tests are performed.
+  // Simulated terminal output for visual presentation.
+  // Not an actual operating-system boot.
+
   const sequence = [
-    ["SUGIRVAS SYSTEM CONSOLE", "bright", 500],
-    ["BOOTLOADER / OPERATOR ENVIRONMENT", "dim", 450],
-    ["", "", 400],
+    ["[    0.000000] Boot sequence initiated", "bright", 330],
+    ["[    0.000112] Initializing runtime environment", "", 390],
+    ["[    0.000521] Loading core execution context", "", 380],
+    ["[    0.001204] Memory allocation complete", "dim", 350],
+    ["[    0.002411] Registering subsystem interfaces", "", 420],
+    ["[    0.003119] Initializing process scheduler", "", 390],
+    ["[    0.004872] Mounting virtual filesystem", "", 400],
+    ["[    0.006218] Runtime services available", "dim", 350],
+    ["", "", 200],
 
-    ["Initializing system runtime...", "", 650],
-    ["Detecting system architecture...", "", 550],
-    ["Architecture: x86_64 / simulated", "dim", 450],
-    ["Loading initialization modules...", "", 700],
-    ["Memory subsystem initialized", "ok", 450],
-    ["Allocating interface memory...", "", 550],
-    ["Runtime memory allocation complete", "ok", 450],
-    ["", "", 400],
+    [":: Loading system components", "bright", 430],
+    ["   [ OK ] Runtime configuration", "ok", 350],
+    ["   [ OK ] Resource initialization", "ok", 350],
+    ["   [ OK ] Interface dependencies", "ok", 360],
+    ["   [ OK ] Execution environment", "ok", 360],
+    ["", "", 200],
 
-    ["[ CORE ] Initializing system services", "bright", 600],
-    ["[  OK  ] Runtime environment loaded", "ok", 500],
-    ["[  OK  ] Interface components registered", "ok", 550],
-    ["[  OK  ] Resource mappings initialized", "ok", 500],
-    ["[  OK  ] Local execution context ready", "ok", 600],
-    ["", "", 500],
+    [":: Initializing console services", "bright", 430],
+    ["   [ OK ] Standard input/output", "ok", 350],
+    ["   [ OK ] Terminal session", "ok", 350],
+    ["   [ OK ] Display context", "ok", 350],
+    ["", "", 200],
 
-    ["[ SEC  ] Loading security interface", "bright", 650],
-    ["[  OK  ] Security module definitions loaded", "ok", 550],
-    ["[  OK  ] Configuration registry parsed", "ok", 550],
-    ["[  OK  ] Local interface policy initialized", "ok", 550],
-    ["[  OK  ] Integrity simulation complete", "ok", 650],
-    ["", "", 500],
+    [":: Starting application runtime", "bright", 450],
+    ["   [ OK ] Asset registry", "ok", 350],
+    ["   [ OK ] Interface renderer", "ok", 350],
+    ["   [ OK ] Event handlers", "ok", 350],
+    ["   [ OK ] Application environment", "ok", 420],
+    ["", "", 200],
 
-    ["[ ID   ] Resolving operator identity", "bright", 750],
-    ["Identity identifier: 0x5355474952564153", "dim", 550],
-    ["Operator: SUGIRVAS SENTHILKUMAR", "bright", 650],
-    ["Domain: SOFTWARE ENGINEERING", "", 500],
-    ["Specialization: CYBERSECURITY", "", 550],
-    ["Identity context registered", "ok", 650],
-    ["", "", 500],
-
-    ["[ SYS  ] Mounting portfolio environment", "bright", 700],
-    ["Loading project registry...", "", 550],
-    ["Registering CYBER FEED...", "", 450],
-    ["Registering SUGISOC...", "", 450],
-    ["Registering SUGISCOPE...", "", 450],
-    ["Preparing presentation layer...", "", 650],
-    ["[  OK  ] Interface components available", "ok", 650],
-    ["", "", 400],
-
-    ["[ FINAL ] Running startup diagnostics", "bright", 700],
-    ["Checking display configuration...", "", 500],
-    ["Monochrome display profile: ACTIVE", "ok", 550],
-    ["Loading interaction handlers...", "", 600],
-    ["Preparing terminal handoff...", "", 750],
-    ["[  OK  ] Initialization complete", "ok", 650],
-    ["", "", 500],
-    ["SYSTEM READY.", "bright", 800],
-    ["", "", 300]
+    ["[ SYSTEM ] Initialization complete.", "bright", 600],
+    ["[ STATUS ] READY", "bright", 450],
+    ["", "", 250]
   ];
 
-  const delay = (ms) =>
+  const delay = ms =>
     new Promise(resolve => setTimeout(resolve, ms));
 
   function scrollBottom() {
@@ -290,15 +270,7 @@ body { font-family: var(--mono); }
 
     if (style) line.classList.add(style);
 
-    if (message === "") {
-      line.textContent = "\u00a0";
-    } else {
-      const stamp = (time / 1000).toFixed(6)
-        .padStart(11, " ");
-
-      line.textContent = `[${stamp}] ${message}`;
-    }
-
+    line.textContent = message || "\u00a0";
     output.appendChild(line);
     scrollBottom();
   }
@@ -306,14 +278,14 @@ body { font-family: var(--mono); }
   async function runBoot() {
     for (const [message, style, duration] of sequence) {
       addLine(message, style);
-
-      time += duration;
+      elapsed += duration;
       await delay(duration);
     }
 
     completed = true;
     prompt.classList.add("ready");
     scrollBottom();
+
     enter.focus({ preventScroll: true });
   }
 
@@ -325,20 +297,24 @@ body { font-family: var(--mono); }
     portfolio.classList.add("unlocked");
     boot.classList.add("exit");
 
-    const removeDelay = reducedMotion ? 0 : 600;
+    const fadeDuration = reducedMotion ? 0 : 500;
 
     setTimeout(() => {
       boot.remove();
-      document.getElementById("portfolio")
-        .setAttribute("tabindex", "-1");
+
+      portfolio.setAttribute("tabindex", "-1");
       portfolio.focus({ preventScroll: true });
-    }, removeDelay);
+    }, fadeDuration);
   }
 
   enter.addEventListener("click", openPortfolio);
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && completed && !unlocked) {
+  document.addEventListener("keydown", event => {
+    if (
+      event.key === "Enter" &&
+      completed &&
+      !unlocked
+    ) {
       event.preventDefault();
       openPortfolio();
     }
