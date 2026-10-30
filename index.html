@@ -17,16 +17,18 @@
   --mono: "SFMono-Regular", Menlo, Monaco,
           Consolas, "Liberation Mono", monospace;
 }
+
 * { box-sizing: border-box; }
+
 html, body {
   margin: 0;
   min-height: 100%;
   background: var(--bg);
   color: var(--fg);
 }
+
 body { font-family: var(--mono); }
 
-/* Portfolio */
 #portfolio {
   min-height: 100svh;
   display: grid;
@@ -35,26 +37,30 @@ body { font-family: var(--mono); }
   text-align: center;
   font-family: system-ui, sans-serif;
 }
+
 #portfolio h1 {
   margin: 0;
   font-size: clamp(2rem, 6vw, 4rem);
   letter-spacing: -.04em;
   line-height: 1.1;
 }
+
 #portfolio p {
   color: #aaa;
   font-size: .76rem;
   letter-spacing: .17em;
   line-height: 1.8;
 }
+
 .js #portfolio { visibility: hidden; }
+
 .js #portfolio.unlocked {
   visibility: visible;
   animation: reveal .5s ease both;
 }
 
-/* Full-screen terminal */
 #boot { display: none; }
+
 .js #boot {
   position: fixed;
   inset: 0;
@@ -64,10 +70,12 @@ body { font-family: var(--mono); }
   overflow: hidden;
   transition: opacity .45s ease;
 }
+
 .js #boot.exit {
   opacity: 0;
   pointer-events: none;
 }
+
 .console {
   flex: 1;
   overflow-y: auto;
@@ -76,10 +84,12 @@ body { font-family: var(--mono); }
   scrollbar-width: thin;
   scrollbar-color: #333 #000;
 }
+
 .console-content {
   width: 100%;
   max-width: 1100px;
 }
+
 #output {
   font-size: clamp(11px, 1.05vw, 14px);
   line-height: 1.9;
@@ -87,6 +97,7 @@ body { font-family: var(--mono); }
   overflow-wrap: anywhere;
   font-variant-numeric: tabular-nums;
 }
+
 .line { min-height: 1.9em; }
 .dim { color: var(--muted); }
 .bright { color: #fff; }
@@ -99,7 +110,9 @@ body { font-family: var(--mono); }
   font-size: clamp(11px, 1.05vw, 14px);
   line-height: 2;
 }
+
 .prompt.ready { display: block; }
+
 .command { margin-bottom: 10px; }
 .command-prefix { color: #999; }
 
@@ -116,11 +129,14 @@ body { font-family: var(--mono); }
   font: inherit;
   letter-spacing: .025em;
 }
+
 .enter:hover { color: #ccc; }
+
 .enter:focus-visible {
   outline: 1px solid #fff;
   outline-offset: 5px;
 }
+
 .cursor {
   display: inline-block;
   width: .65em;
@@ -129,21 +145,27 @@ body { font-family: var(--mono); }
   vertical-align: -.16em;
   animation: blink 1s steps(1) infinite;
 }
+
 @keyframes blink {
   50% { opacity: 0; }
 }
+
 @keyframes reveal {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
 @media (max-width: 600px) {
   .console { padding: 24px 16px; }
+
   #output, .prompt {
     font-size: 11px;
     line-height: 1.7;
   }
+
   .line { min-height: 1.7em; }
 }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -152,8 +174,8 @@ body { font-family: var(--mono); }
 }
 </style>
 </head>
-<body>
 
+<body>
 <section id="boot" aria-label="Operations console initialization">
   <div class="console" id="console">
     <div class="console-content">
@@ -191,52 +213,42 @@ body { font-family: var(--mono); }
   const enter = document.getElementById("enter");
   const portfolio = document.getElementById("portfolio");
 
-  const reducedMotion = window.matchMedia(
+  const reducedMotion = matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
   let completed = false;
   let unlocked = false;
 
-  // Fictional operations-console initialization.
-  // These messages do not represent real security checks.
+  // Simulated terminal output, not actual OS diagnostics.
   const sequence = [
-    ["OPERATIONS CONSOLE", "bright", 500],
-    ["INITIALIZATION SEQUENCE / LOCAL RUNTIME", "dim", 400],
-    ["──────────────────────────────────────", "separator", 300],
-    ["", "", 250],
-
-    ["> initializing execution environment", "", 450],
-    ["> loading system configuration", "", 400],
-    ["> allocating runtime resources", "", 420],
-    ["> resolving interface dependencies", "", 400],
-    ["> mounting operational workspace", "", 450],
-    ["", "", 250],
-
-    ["  [ OK ] execution context initialized", "status", 370],
-    ["  [ OK ] runtime dependencies resolved", "status", 370],
-    ["  [ OK ] workspace mounted", "status", 380],
-    ["", "", 250],
-
-    ["> initializing console subsystem", "", 450],
-    ["> establishing local session context", "", 450],
-    ["> preparing interaction layer", "", 420],
-    ["", "", 250],
-
-    ["  [ OK ] console session initialized", "status", 400],
-    ["  [ OK ] display interface available", "status", 400],
-    ["  [ OK ] runtime services operational", "status", 450],
-    ["", "", 250],
-
-    ["> finalizing system initialization", "", 500],
-    ["> releasing application interface", "", 450],
-    ["", "", 250],
-    ["STATUS ........................ READY", "bright", 500],
-    ["──────────────────────────────────────", "separator", 300]
+    ["OPERATIONS CONSOLE", "bright"],
+    ["INITIALIZATION SEQUENCE / LOCAL RUNTIME", "dim"],
+    ["────────────────────────────────────────", "separator"],
+    ["> loading execution context", ""],
+    ["> resolving runtime dependencies", ""],
+    ["> initializing memory subsystem", ""],
+    ["> mounting virtual workspace", ""],
+    ["", ""],
+    ["  [ OK ] Execution environment", "status"],
+    ["  [ OK ] Memory allocation", "status"],
+    ["  [ OK ] Filesystem interface", "status"],
+    ["", ""],
+    ["> preparing console services", ""],
+    ["> registering input handlers", ""],
+    ["> initializing display pipeline", ""],
+    ["", ""],
+    ["  [ OK ] Console subsystem", "status"],
+    ["  [ OK ] Runtime services", "status"],
+    ["  [ OK ] Interface controller", "status"],
+    ["", ""],
+    ["> completing startup sequence", ""],
+    ["STATUS ......................... READY", "bright"],
+    ["────────────────────────────────────────", "separator"]
   ];
 
-  const delay = (ms) =>
-    new Promise(resolve => setTimeout(resolve, ms));
+  const BOOT_DURATION = 5000;
+  const STEP_INTERVAL = BOOT_DURATION / sequence.length;
 
   function scrollBottom() {
     consoleView.scrollTop = consoleView.scrollHeight;
@@ -247,16 +259,36 @@ body { font-family: var(--mono); }
     line.className = "line";
 
     if (style) line.classList.add(style);
-    line.textContent = message || "\u00a0";
 
+    line.textContent = message || "\u00a0";
     output.appendChild(line);
     scrollBottom();
   }
 
   async function runBoot() {
-    for (const [message, style, duration] of sequence) {
+    const start = performance.now();
+
+    for (let i = 0; i < sequence.length; i++) {
+      const [message, style] = sequence[i];
+
+      const targetTime = start + i * STEP_INTERVAL;
+      const remaining = targetTime - performance.now();
+
+      if (remaining > 0) {
+        await new Promise(resolve =>
+          setTimeout(resolve, remaining)
+        );
+      }
+
       appendLine(message, style);
-      await delay(duration);
+    }
+
+    const finalWait = start + BOOT_DURATION - performance.now();
+
+    if (finalWait > 0) {
+      await new Promise(resolve =>
+        setTimeout(resolve, finalWait)
+      );
     }
 
     completed = true;
@@ -272,7 +304,7 @@ body { font-family: var(--mono); }
     portfolio.classList.add("unlocked");
     boot.classList.add("exit");
 
-    window.setTimeout(() => {
+    setTimeout(() => {
       boot.remove();
       portfolio.setAttribute("tabindex", "-1");
       portfolio.focus({ preventScroll: true });
@@ -281,7 +313,7 @@ body { font-family: var(--mono); }
 
   enter.addEventListener("click", openPortfolio);
 
-  document.addEventListener("keydown", (event) => {
+  document.addEventListener("keydown", event => {
     if (event.key === "Enter" && completed && !unlocked) {
       event.preventDefault();
       openPortfolio();
