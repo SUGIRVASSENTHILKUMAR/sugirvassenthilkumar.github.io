@@ -1,11 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
-  <meta name="description" content="Portfolio of Sugirvas Senthilkumar">
+  <meta name="description"
+        content="Portfolio of Sugirvas Senthilkumar">
   <title>Sugirvas Senthilkumar</title>
+
   <script>
     document.documentElement.classList.add("js");
   </script>
@@ -19,7 +22,11 @@
               Consolas, "Liberation Mono", monospace;
     }
 
-    * { box-sizing: border-box; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
     html, body {
       margin: 0;
@@ -28,9 +35,13 @@
       color: var(--fg);
     }
 
-    body { font-family: var(--mono); }
+    body {
+      font-family: var(--mono);
+    }
 
-    /* PORTFOLIO */
+    /* =========================================
+       PORTFOLIO
+    ========================================= */
 
     #portfolio {
       min-height: 100svh;
@@ -55,16 +66,22 @@
       line-height: 1.8;
     }
 
-    .js #portfolio { visibility: hidden; }
+    .js #portfolio {
+      visibility: hidden;
+    }
 
     .js #portfolio.unlocked {
       visibility: visible;
       animation: reveal .45s ease both;
     }
 
-    /* TERMINAL STAGES */
+    /* =========================================
+       TERMINAL STAGES
+    ========================================= */
 
-    .terminal-stage { display: none; }
+    .terminal-stage {
+      display: none;
+    }
 
     .js .terminal-stage {
       position: fixed;
@@ -122,15 +139,27 @@
       overflow-wrap: anywhere;
     }
 
-    .line, .login-line {
+    .line,
+    .login-line {
       min-height: 1.9em;
     }
 
-    .bright { color: #fff; }
-    .separator { color: #555; }
-    .login-prefix, .command-prefix { color: #999; }
+    .bright {
+      color: #fff;
+    }
 
-    /* INLINE ASCII PROGRESS */
+    .separator {
+      color: #555;
+    }
+
+    .login-prefix,
+    .command-prefix {
+      color: #999;
+    }
+
+    /* =========================================
+       STAGE 01 — INLINE ASCII PROGRESS
+    ========================================= */
 
     .boot-task {
       display: grid;
@@ -157,16 +186,22 @@
       color: #fff;
     }
 
-    /* ENTER PROMPT */
+    /* =========================================
+       ENTER PROMPT
+    ========================================= */
 
     .prompt {
       display: none;
       margin-top: 24px;
     }
 
-    .prompt.ready { display: block; }
+    .prompt.ready {
+      display: block;
+    }
 
-    .command { margin-bottom: 8px; }
+    .command {
+      margin-bottom: 8px;
+    }
 
     .enter {
       display: inline-flex;
@@ -197,25 +232,39 @@
     }
 
     @keyframes blink {
-      50% { opacity: 0; }
+      50% {
+        opacity: 0;
+      }
     }
 
     @keyframes reveal {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
-    /* MOBILE */
+    /* =========================================
+       MOBILE
+    ========================================= */
 
     @media (max-width: 650px) {
-      .console { padding: 24px 16px; }
+      .console {
+        padding: 24px 16px;
+      }
 
-      #output, #login-output, .prompt {
+      #output,
+      #login-output,
+      .prompt {
         font-size: 11px;
         line-height: 1.75;
       }
 
-      .line, .login-line {
+      .line,
+      .login-line {
         min-height: 1.75em;
       }
 
@@ -231,7 +280,9 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
       }
@@ -241,12 +292,15 @@
 
 <body>
 
-  <!-- STAGE 01: SECURE BOOT -->
+  <!-- =======================================
+       STAGE 01 — SECURE BOOT
+  ======================================== -->
 
-  <section id="boot-stage"
-           class="terminal-stage"
-           aria-label="Secure boot introduction">
-
+  <section
+    id="boot-stage"
+    class="terminal-stage"
+    aria-label="Secure boot introduction"
+  >
     <div class="console" id="boot-console">
       <div class="console-content">
 
@@ -254,13 +308,22 @@
 
         <div class="prompt" id="prompt">
           <div class="command">
-            <span class="command-prefix">system@localhost:~$</span>
+            <span class="command-prefix">
+              system@localhost:~$
+            </span>
             ./launch
           </div>
 
-          <button class="enter" id="enter" type="button">
+          <button
+            class="enter"
+            id="enter"
+            type="button"
+          >
             Press ENTER to continue
-            <span class="cursor" aria-hidden="true"></span>
+            <span
+              class="cursor"
+              aria-hidden="true"
+            ></span>
           </button>
         </div>
 
@@ -268,21 +331,29 @@
     </div>
   </section>
 
-  <!-- STAGE 02: TERMINAL LOGIN -->
+  <!-- =======================================
+       STAGE 02 — TERMINAL LOGIN
+  ======================================== -->
 
-  <section id="login-stage"
-           class="terminal-stage"
-           aria-label="Automated terminal login"
-           aria-hidden="true">
-
+  <section
+    id="login-stage"
+    class="terminal-stage"
+    aria-label="Automated terminal login"
+    aria-hidden="true"
+  >
     <div class="console" id="login-console">
       <div class="console-content">
-        <div id="login-output" aria-hidden="true"></div>
+        <div
+          id="login-output"
+          aria-hidden="true"
+        ></div>
       </div>
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
+  <!-- =======================================
+       PORTFOLIO
+  ======================================== -->
 
   <main id="portfolio">
     <div>
@@ -295,32 +366,63 @@
     (() => {
       "use strict";
 
-      const boot = document.getElementById("boot-stage");
-      const bootConsole = document.getElementById("boot-console");
-      const output = document.getElementById("output");
-      const prompt = document.getElementById("prompt");
-      const enter = document.getElementById("enter");
+      /* =====================================
+         ELEMENTS
+      ===================================== */
 
-      const loginStage = document.getElementById("login-stage");
-      const loginConsole = document.getElementById("login-console");
-      const loginOutput = document.getElementById("login-output");
-      const portfolio = document.getElementById("portfolio");
+      const boot =
+        document.getElementById("boot-stage");
+
+      const bootConsole =
+        document.getElementById("boot-console");
+
+      const output =
+        document.getElementById("output");
+
+      const prompt =
+        document.getElementById("prompt");
+
+      const enter =
+        document.getElementById("enter");
+
+      const loginStage =
+        document.getElementById("login-stage");
+
+      const loginConsole =
+        document.getElementById("login-console");
+
+      const loginOutput =
+        document.getElementById("login-output");
+
+      const portfolio =
+        document.getElementById("portfolio");
 
       const reducedMotion = matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
 
+      /* =====================================
+         TIMING
+      ===================================== */
+
       const BOOT_DURATION = 5000;
+      const LOGIN_DURATION = 5000;
       const BAR_WIDTH = 20;
 
       let bootReady = false;
       let loginStarted = false;
 
       const delay = ms =>
-        new Promise(resolve => setTimeout(resolve, ms));
+        new Promise(resolve =>
+          setTimeout(resolve, Math.max(0, ms))
+        );
 
-      // Visual-only initialization sequence.
-      // No actual firmware or secure-boot verification is performed.
+      /* =====================================
+         STAGE 01 — BOOT TASKS
+      ===================================== */
+
+      // Visual-only simulated startup.
+      // No firmware or security checks occur.
 
       const tasks = [
         "initializing execution environment",
@@ -333,48 +435,83 @@
         "preparing application runtime"
       ];
 
-      // Slightly varied durations for a more organic feel.
-      // Still normalized to finish in ~5 seconds total.
-      const taskWeights = [1.12, 0.86, 1.08, 0.92, 1.18, 0.84, 1.02, 0.98];
-      const totalWeight = taskWeights.reduce((a, b) => a + b, 0);
+      // Varied timings, normalized to 5 seconds.
+
+      const taskWeights = [
+        1.12,
+        0.86,
+        1.08,
+        0.92,
+        1.18,
+        0.84,
+        1.02,
+        0.98
+      ];
+
+      const totalWeight = taskWeights.reduce(
+        (sum, weight) => sum + weight,
+        0
+      );
 
       function scrollBottom(element) {
-        element.scrollTop = element.scrollHeight;
+        element.scrollTop =
+          element.scrollHeight;
       }
 
       function addLine(text, className = "") {
-        const line = document.createElement("div");
+        const line =
+          document.createElement("div");
+
         line.className = "line";
 
-        if (className) line.classList.add(className);
+        if (className) {
+          line.classList.add(className);
+        }
 
-        line.textContent = text || "\u00a0";
+        line.textContent =
+          text || "\u00a0";
+
         output.appendChild(line);
         scrollBottom(bootConsole);
       }
 
       function createTask(label) {
-        const row = document.createElement("div");
+        const row =
+          document.createElement("div");
+
         row.className = "boot-task";
 
-        const command = document.createElement("span");
+        const command =
+          document.createElement("span");
+
         command.className = "task-label";
         command.textContent = "> " + label;
 
-        const progress = document.createElement("span");
+        const progress =
+          document.createElement("span");
+
         progress.className = "task-progress";
 
         row.append(command, progress);
         output.appendChild(row);
 
         scrollBottom(bootConsole);
+
         return progress;
       }
 
       function updateTask(progress, percentage) {
-        const n = Math.max(0, Math.min(100, Math.round(percentage)));
-        const filled = Math.round(n / 100 * BAR_WIDTH);
-        const bar = "#".repeat(filled) + "-".repeat(BAR_WIDTH - filled);
+        const n = Math.max(
+          0,
+          Math.min(100, Math.round(percentage))
+        );
+
+        const filled =
+          Math.round(n / 100 * BAR_WIDTH);
+
+        const bar =
+          "#".repeat(filled) +
+          "-".repeat(BAR_WIDTH - filled);
 
         progress.textContent =
           `[${bar}] ${String(n).padStart(3, "0")}%`;
@@ -389,10 +526,12 @@
       }
 
       function easeInOutQuad(t) {
-        return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        return t < 0.5
+          ? 2 * t * t
+          : 1 - Math.pow(-2 * t + 2, 2) / 2;
       }
 
-      const easingFns = [
+      const easingFunctions = [
         easeOutCubic,
         easeInOutQuad,
         easeOutCubic,
@@ -404,125 +543,257 @@
       ];
 
       async function runBoot() {
+        const bootStart = performance.now();
+
         addLine("SECURE BOOT", "bright");
-        addLine("────────────────────────────────────────", "separator");
+        addLine(
+          "────────────────────────────────────────",
+          "separator"
+        );
         addLine("");
 
-        let elapsedBefore = 0;
+        let cumulativeWeight = 0;
 
         for (let i = 0; i < tasks.length; i++) {
           const bar = createTask(tasks[i]);
-          const taskDuration = BOOT_DURATION * (taskWeights[i] / totalWeight);
-          const taskStart = performance.now();
-          const easing = easingFns[i] || easeOutCubic;
+
+          const taskStart =
+            bootStart +
+            BOOT_DURATION *
+            (cumulativeWeight / totalWeight);
+
+          cumulativeWeight += taskWeights[i];
+
+          const taskEnd =
+            bootStart +
+            BOOT_DURATION *
+            (cumulativeWeight / totalWeight);
+
+          const taskDuration =
+            taskEnd - taskStart;
+
+          const easing =
+            easingFunctions[i];
 
           updateTask(bar, 0);
 
           while (true) {
-            const elapsed = performance.now() - taskStart;
-            const rawProgress = Math.min(1, elapsed / taskDuration);
-            const easedProgress = easing(rawProgress);
-            const displayProgress = rawProgress >= 1 ? 100 : Math.min(99, easedProgress * 100);
+            const now = performance.now();
 
-            updateTask(bar, displayProgress);
+            const rawProgress = Math.min(
+              1,
+              Math.max(
+                0,
+                (now - taskStart) / taskDuration
+              )
+            );
 
-            if (rawProgress >= 1) break;
+            const easedProgress =
+              easing(rawProgress);
 
-            await delay(reducedMotion ? 16 : 32);
+            updateTask(
+              bar,
+              rawProgress >= 1
+                ? 100
+                : Math.min(
+                    99,
+                    easedProgress * 100
+                  )
+            );
+
+            if (rawProgress >= 1) {
+              break;
+            }
+
+            await delay(32);
           }
 
           updateTask(bar, 100);
-          elapsedBefore += taskDuration;
         }
 
         addLine("");
-        addLine("[ OK ] SYSTEM READY", "bright");
+        addLine(
+          "[ OK ] SYSTEM READY",
+          "bright"
+        );
+
+        const remaining =
+          bootStart +
+          BOOT_DURATION -
+          performance.now();
+
+        if (remaining > 0) {
+          await delay(remaining);
+        }
 
         bootReady = true;
         prompt.classList.add("ready");
-        scrollBottom(bootConsole);
 
+        scrollBottom(bootConsole);
         enter.focus({ preventScroll: true });
       }
 
-      /* STAGE 02 — PERSONALIZED TERMINAL LOGIN */
+      /* =====================================
+         STAGE 02 — TERMINAL HELPERS
+      ===================================== */
 
       function createTerminalLine(prefix = "") {
-        const line = document.createElement("div");
+        const line =
+          document.createElement("div");
+
         line.className = "login-line";
 
-        const label = document.createElement("span");
+        const label =
+          document.createElement("span");
+
         label.className = "login-prefix";
         label.textContent = prefix;
 
-        const value = document.createElement("span");
+        const value =
+          document.createElement("span");
 
         line.append(label, value);
         loginOutput.appendChild(line);
 
         scrollBottom(loginConsole);
+
         return value;
       }
 
-      async function typeInto(element, text, speed) {
-        const cursor = document.createElement("span");
+      function attachCursor(element) {
+        const cursor =
+          document.createElement("span");
+
         cursor.className = "cursor";
-        cursor.setAttribute("aria-hidden", "true");
+
+        cursor.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
         element.after(cursor);
 
-        for (const character of text) {
-          element.textContent += character;
+        return cursor;
+      }
+
+      async function typeWithin(
+        element,
+        text,
+        startTime,
+        duration
+      ) {
+        const cursor =
+          attachCursor(element);
+
+        const characters =
+          Array.from(text);
+
+        for (
+          let i = 0;
+          i < characters.length;
+          i++
+        ) {
+          const target =
+            startTime +
+            ((i + 1) / characters.length) *
+            duration;
+
+          const wait =
+            target - performance.now();
+
+          if (wait > 0) {
+            await delay(wait);
+          }
+
+          element.textContent +=
+            characters[i];
+
           scrollBottom(loginConsole);
-          await delay(speed);
         }
 
         cursor.remove();
       }
 
-      async function simulateSilentPassword(element, duration) {
-        const cursor = document.createElement("span");
-        cursor.className = "cursor";
-        cursor.setAttribute("aria-hidden", "true");
-        element.after(cursor);
+      async function waitUntil(targetTime) {
+        const remaining =
+          targetTime - performance.now();
 
-        await delay(duration);
-
-        cursor.remove();
+        if (remaining > 0) {
+          await delay(remaining);
+        }
       }
 
+      /* =====================================
+         STAGE 02 — FIVE-SECOND LOGIN
+      ===================================== */
+
       async function runLogin() {
-        loginStage.setAttribute("aria-hidden", "false");
+        const start = performance.now();
+
+        loginStage.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
         loginStage.classList.add("active");
 
         boot.remove();
-        await delay(300);
 
-        await typeInto(
-          createTerminalLine("localhost login: "),
+        // 0.00s–0.20s: fresh terminal
+
+        await waitUntil(start + 200);
+
+        // 0.20s–2.30s: username
+
+        await typeWithin(
+          createTerminalLine(
+            "localhost login: "
+          ),
           "sugirvassenthilkumar",
-          100
+          start + 200,
+          2100
         );
 
-        await delay(250);
+        // 2.30s–2.55s: brief pause
 
-        // Realistic terminal-style password behavior:
-        // no visible asterisks, just a silent pause/cursor.
-        await simulateSilentPassword(
-          createTerminalLine("Password: "),
-          950
-        );
+        await waitUntil(start + 2550);
 
-        await delay(300);
+        // 2.55s–3.45s: silent password
+        // No password text, characters or
+        // credentials are generated or stored.
+
+        const passwordLine =
+          createTerminalLine("Password: ");
+
+        const passwordCursor =
+          attachCursor(passwordLine);
+
+        await waitUntil(start + 3450);
+
+        passwordCursor.remove();
+
+        // 3.45s–3.70s: terminal newline
 
         createTerminalLine("");
 
-        await typeInto(
-          createTerminalLine("sugirvassenthilkumar@localhost:~$ "),
+        await waitUntil(start + 3700);
+
+        // 3.70s–4.70s: whoami
+
+        await typeWithin(
+          createTerminalLine(
+            "sugirvassenthilkumar@localhost:~$ "
+          ),
           "whoami",
-          140
+          start + 3700,
+          1000
         );
 
-        await delay(500);
+        // 4.70s–5.00s: final pause
+
+        await waitUntil(start + LOGIN_DURATION);
+
+        // Reveal the portfolio automatically.
 
         portfolio.classList.add("unlocked");
         loginStage.classList.add("exit");
@@ -531,31 +802,50 @@
 
         loginStage.remove();
 
-        portfolio.setAttribute("tabindex", "-1");
-        portfolio.focus({ preventScroll: true });
+        portfolio.setAttribute(
+          "tabindex",
+          "-1"
+        );
+
+        portfolio.focus({
+          preventScroll: true
+        });
       }
 
+      /* =====================================
+         INTERACTION
+      ===================================== */
+
       function enterConsole() {
-        if (!bootReady || loginStarted) return;
+        if (!bootReady || loginStarted) {
+          return;
+        }
 
         loginStarted = true;
         runLogin();
       }
 
-      enter.addEventListener("click", enterConsole);
+      enter.addEventListener(
+        "click",
+        enterConsole
+      );
 
-      document.addEventListener("keydown", event => {
-        if (
-          event.key === "Enter" &&
-          bootReady &&
-          !loginStarted
-        ) {
-          event.preventDefault();
-          enterConsole();
+      document.addEventListener(
+        "keydown",
+        event => {
+          if (
+            event.key === "Enter" &&
+            bootReady &&
+            !loginStarted
+          ) {
+            event.preventDefault();
+            enterConsole();
+          }
         }
-      });
+      );
 
       runBoot();
+
     })();
   </script>
 </body>
