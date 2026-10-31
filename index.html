@@ -1,531 +1,562 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#000000">
-<meta name="description" content="Portfolio of Sugirvas Senthilkumar">
-<title>Sugirvas Senthilkumar</title>
-<script>
-  document.documentElement.classList.add("js");
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Portfolio of Sugirvas Senthilkumar">
+  <title>Sugirvas Senthilkumar</title>
+  <script>
+    document.documentElement.classList.add("js");
+  </script>
 
-<style>
-:root {
-  color-scheme: dark;
-  --fg: #f2f2f2;
-  --muted: #919191;
-  --mono: "SFMono-Regular", Menlo, Monaco,
-          Consolas, "Liberation Mono", monospace;
-}
+  <style>
+    :root {
+      color-scheme: dark;
+      --fg: #f2f2f2;
+      --muted: #919191;
+      --mono: "SFMono-Regular", Menlo, Monaco,
+              Consolas, "Liberation Mono", monospace;
+    }
 
-* { box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-html, body {
-  margin: 0;
-  min-height: 100%;
-  background: #000;
-  color: var(--fg);
-}
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: #000;
+      color: var(--fg);
+    }
 
-body { font-family: var(--mono); }
+    body { font-family: var(--mono); }
 
-/* PORTFOLIO */
+    /* PORTFOLIO */
 
-#portfolio {
-  min-height: 100svh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  text-align: center;
-  font-family: system-ui, sans-serif;
-}
+    #portfolio {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      font-family: system-ui, sans-serif;
+    }
 
-#portfolio h1 {
-  margin: 0;
-  font-size: clamp(2rem, 6vw, 4rem);
-  letter-spacing: -.04em;
-  line-height: 1.1;
-}
+    #portfolio h1 {
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: -.04em;
+      line-height: 1.1;
+    }
 
-#portfolio p {
-  color: #aaa;
-  font-size: .76rem;
-  letter-spacing: .17em;
-  line-height: 1.8;
-}
+    #portfolio p {
+      color: #aaa;
+      font-size: .76rem;
+      letter-spacing: .17em;
+      line-height: 1.8;
+    }
 
-.js #portfolio { visibility: hidden; }
+    .js #portfolio { visibility: hidden; }
 
-.js #portfolio.unlocked {
-  visibility: visible;
-  animation: reveal .45s ease both;
-}
+    .js #portfolio.unlocked {
+      visibility: visible;
+      animation: reveal .45s ease both;
+    }
 
-/* TERMINAL STAGES */
+    /* TERMINAL STAGES */
 
-.terminal-stage { display: none; }
+    .terminal-stage { display: none; }
 
-.js .terminal-stage {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  background: #000;
-  overflow: hidden;
-  transition: opacity .4s ease;
-}
+    .js .terminal-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      background: #000;
+      overflow: hidden;
+      transition: opacity .4s ease;
+    }
 
-.js .terminal-stage.exit {
-  opacity: 0;
-  pointer-events: none;
-}
+    .js .terminal-stage.exit {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-.js #login-stage {
-  z-index: 101;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
+    .js #login-stage {
+      z-index: 101;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
 
-.js #login-stage.active {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-}
+    .js #login-stage.active {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-.console {
-  flex: 1;
-  min-width: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: clamp(24px, 4vw, 60px);
-  scrollbar-width: thin;
-  scrollbar-color: #333 #000;
-}
+    .console {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: clamp(24px, 4vw, 60px);
+      scrollbar-width: thin;
+      scrollbar-color: #333 #000;
+    }
 
-.console-content {
-  width: 100%;
-  max-width: 1100px;
-}
+    .console-content {
+      width: 100%;
+      max-width: 1100px;
+    }
 
-#output,
-#login-output,
-.prompt {
-  font-size: clamp(12px, 1.1vw, 15px);
-  line-height: 1.9;
-  font-variant-numeric: tabular-nums;
-}
+    #output,
+    #login-output,
+    .prompt {
+      font-size: clamp(12px, 1.1vw, 15px);
+      line-height: 1.9;
+      font-variant-numeric: tabular-nums;
+    }
 
-#login-output {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
+    #login-output {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
 
-.line, .login-line {
-  min-height: 1.9em;
-}
+    .line, .login-line {
+      min-height: 1.9em;
+    }
 
-.bright { color: #fff; }
-.separator { color: #555; }
-.login-prefix, .command-prefix { color: #999; }
+    .bright { color: #fff; }
+    .separator { color: #555; }
+    .login-prefix, .command-prefix { color: #999; }
 
-/* INLINE ASCII PROGRESS */
+    /* INLINE ASCII PROGRESS */
 
-.boot-task {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 16px;
-  width: 100%;
-  margin: 2px 0;
-}
+    .boot-task {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: 16px;
+      width: 100%;
+      margin: 2px 0;
+    }
 
-.task-label {
-  color: #ededed;
-  overflow-wrap: anywhere;
-}
+    .task-label {
+      color: #ededed;
+      overflow-wrap: anywhere;
+    }
 
-.task-progress {
-  color: #aaa;
-  white-space: pre;
-  font-size: .92em;
-  font-variant-numeric: tabular-nums;
-}
+    .task-progress {
+      color: #aaa;
+      white-space: pre;
+      font-size: .92em;
+      font-variant-numeric: tabular-nums;
+    }
 
-.task-progress.complete {
-  color: #fff;
-}
+    .task-progress.complete {
+      color: #fff;
+    }
 
-/* ENTER PROMPT */
+    /* ENTER PROMPT */
 
-.prompt {
-  display: none;
-  margin-top: 24px;
-}
+    .prompt {
+      display: none;
+      margin-top: 24px;
+    }
 
-.prompt.ready { display: block; }
-.command { margin-bottom: 8px; }
+    .prompt.ready { display: block; }
 
-.enter {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 0;
-  background: transparent;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-  text-align: left;
-  font: inherit;
-}
+    .command { margin-bottom: 8px; }
 
-.enter:focus-visible {
-  outline: 1px solid #fff;
-  outline-offset: 5px;
-}
+    .enter {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+    }
 
-.cursor {
-  display: inline-block;
-  width: .65em;
-  height: 1.05em;
-  background: #fff;
-  vertical-align: -.16em;
-  margin-left: 3px;
-  animation: blink 1s steps(1) infinite;
-}
+    .enter:focus-visible {
+      outline: 1px solid #fff;
+      outline-offset: 5px;
+    }
 
-@keyframes blink {
-  50% { opacity: 0; }
-}
+    .cursor {
+      display: inline-block;
+      width: .65em;
+      height: 1.05em;
+      background: #fff;
+      vertical-align: -.16em;
+      margin-left: 3px;
+      animation: blink 1s steps(1) infinite;
+    }
 
-@keyframes reveal {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
 
-/* MOBILE */
+    @keyframes reveal {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-@media (max-width: 650px) {
-  .console { padding: 24px 16px; }
+    /* MOBILE */
 
-  #output, #login-output, .prompt {
-    font-size: 11px;
-    line-height: 1.75;
-  }
+    @media (max-width: 650px) {
+      .console { padding: 24px 16px; }
 
-  .line, .login-line {
-    min-height: 1.75em;
-  }
+      #output, #login-output, .prompt {
+        font-size: 11px;
+        line-height: 1.75;
+      }
 
-  .boot-task {
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin-bottom: 6px;
-  }
+      .line, .login-line {
+        min-height: 1.75em;
+      }
 
-  .task-progress {
-    padding-left: 2ch;
-  }
-}
+      .boot-task {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 6px;
+      }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
-}
-</style>
+      .task-progress {
+        padding-left: 2ch;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- STAGE 01: SECURE BOOT -->
+  <!-- STAGE 01: SECURE BOOT -->
 
-<section id="boot-stage"
-         class="terminal-stage"
-         aria-label="Secure boot introduction">
+  <section id="boot-stage"
+           class="terminal-stage"
+           aria-label="Secure boot introduction">
 
-  <div class="console" id="boot-console">
-    <div class="console-content">
+    <div class="console" id="boot-console">
+      <div class="console-content">
 
-      <div id="output" aria-hidden="true"></div>
+        <div id="output" aria-hidden="true"></div>
 
-      <div class="prompt" id="prompt">
-        <div class="command">
-          <span class="command-prefix">system@localhost:~$</span>
-          ./launch
+        <div class="prompt" id="prompt">
+          <div class="command">
+            <span class="command-prefix">system@localhost:~$</span>
+            ./launch
+          </div>
+
+          <button class="enter" id="enter" type="button">
+            Press ENTER to continue
+            <span class="cursor" aria-hidden="true"></span>
+          </button>
         </div>
 
-        <button class="enter" id="enter" type="button">
-          Press ENTER to continue
-          <span class="cursor" aria-hidden="true"></span>
-        </button>
       </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- STAGE 02: TERMINAL LOGIN -->
+  <!-- STAGE 02: TERMINAL LOGIN -->
 
-<section id="login-stage"
-         class="terminal-stage"
-         aria-label="Automated terminal login"
-         aria-hidden="true">
+  <section id="login-stage"
+           class="terminal-stage"
+           aria-label="Automated terminal login"
+           aria-hidden="true">
 
-  <div class="console" id="login-console">
-    <div class="console-content">
-      <div id="login-output" aria-hidden="true"></div>
+    <div class="console" id="login-console">
+      <div class="console-content">
+        <div id="login-output" aria-hidden="true"></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PORTFOLIO -->
+  <!-- PORTFOLIO -->
 
-<main id="portfolio">
-  <div>
-    <h1>SUGIRVAS SENTHILKUMAR</h1>
-    <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
-  </div>
-</main>
+  <main id="portfolio">
+    <div>
+      <h1>SUGIRVAS SENTHILKUMAR</h1>
+      <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
+    </div>
+  </main>
 
-<script>
-(() => {
-  "use strict";
+  <script>
+    (() => {
+      "use strict";
 
-  const boot = document.getElementById("boot-stage");
-  const bootConsole = document.getElementById("boot-console");
-  const output = document.getElementById("output");
-  const prompt = document.getElementById("prompt");
-  const enter = document.getElementById("enter");
+      const boot = document.getElementById("boot-stage");
+      const bootConsole = document.getElementById("boot-console");
+      const output = document.getElementById("output");
+      const prompt = document.getElementById("prompt");
+      const enter = document.getElementById("enter");
 
-  const loginStage = document.getElementById("login-stage");
-  const loginConsole = document.getElementById("login-console");
-  const loginOutput = document.getElementById("login-output");
-  const portfolio = document.getElementById("portfolio");
+      const loginStage = document.getElementById("login-stage");
+      const loginConsole = document.getElementById("login-console");
+      const loginOutput = document.getElementById("login-output");
+      const portfolio = document.getElementById("portfolio");
 
-  const reducedMotion = matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+      const reducedMotion = matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-  const BOOT_DURATION = 5000;
-  const BAR_WIDTH = 20;
+      const BOOT_DURATION = 5000;
+      const BAR_WIDTH = 20;
 
-  let bootReady = false;
-  let loginStarted = false;
+      let bootReady = false;
+      let loginStarted = false;
 
-  const delay = ms =>
-    new Promise(resolve => setTimeout(resolve, ms));
+      const delay = ms =>
+        new Promise(resolve => setTimeout(resolve, ms));
 
-  // Visual-only initialization sequence.
-  // No actual firmware security checks are performed.
+      // Visual-only initialization sequence.
+      // No actual firmware or secure-boot verification is performed.
 
-  const tasks = [
-    "initializing execution environment",
-    "loading core runtime",
-    "configuring memory subsystem",
-    "mounting virtual filesystem",
-    "resolving module dependencies",
-    "starting system services",
-    "initializing terminal interface",
-    "preparing application runtime"
-  ];
+      const tasks = [
+        "initializing execution environment",
+        "loading core runtime",
+        "configuring memory subsystem",
+        "mounting virtual filesystem",
+        "resolving module dependencies",
+        "starting system services",
+        "initializing terminal interface",
+        "preparing application runtime"
+      ];
 
-  function scrollBottom(element) {
-    element.scrollTop = element.scrollHeight;
-  }
+      // Slightly varied durations for a more organic feel.
+      // Still normalized to finish in ~5 seconds total.
+      const taskWeights = [1.12, 0.86, 1.08, 0.92, 1.18, 0.84, 1.02, 0.98];
+      const totalWeight = taskWeights.reduce((a, b) => a + b, 0);
 
-  function addLine(text, className = "") {
-    const line = document.createElement("div");
-    line.className = "line";
-
-    if (className) line.classList.add(className);
-
-    line.textContent = text || "\u00a0";
-    output.appendChild(line);
-    scrollBottom(bootConsole);
-  }
-
-  function createTask(label) {
-    const row = document.createElement("div");
-    row.className = "boot-task";
-
-    const command = document.createElement("span");
-    command.className = "task-label";
-    command.textContent = "> " + label;
-
-    const progress = document.createElement("span");
-    progress.className = "task-progress";
-
-    row.append(command, progress);
-    output.appendChild(row);
-
-    scrollBottom(bootConsole);
-    return progress;
-  }
-
-  function updateTask(progress, percentage) {
-    const n = Math.max(
-      0, Math.min(100, Math.round(percentage))
-    );
-
-    const filled = Math.round(n / 100 * BAR_WIDTH);
-    const bar = "#".repeat(filled) +
-                "-".repeat(BAR_WIDTH - filled);
-
-    progress.textContent =
-      `[${bar}] ${String(n).padStart(3, "0")}%`;
-
-    if (n === 100) {
-      progress.classList.add("complete");
-    }
-  }
-
-  async function runBoot() {
-    const start = performance.now();
-
-    addLine("SECURE BOOT", "bright");
-    addLine("────────────────────────────────────────", "separator");
-    addLine("");
-
-    const taskDuration = BOOT_DURATION / tasks.length;
-
-    for (let i = 0; i < tasks.length; i++) {
-      const bar = createTask(tasks[i]);
-      const taskStart = start + i * taskDuration;
-      const taskEnd = start + (i + 1) * taskDuration;
-
-      updateTask(bar, 0);
-
-      while (performance.now() < taskEnd) {
-        const elapsed = performance.now() - taskStart;
-        const pct = Math.min(
-          99, elapsed / taskDuration * 100
-        );
-
-        updateTask(bar, pct);
-        await delay(45);
+      function scrollBottom(element) {
+        element.scrollTop = element.scrollHeight;
       }
 
-      updateTask(bar, 100);
-    }
+      function addLine(text, className = "") {
+        const line = document.createElement("div");
+        line.className = "line";
 
-    addLine("");
-    addLine("[ OK ] SYSTEM READY", "bright");
+        if (className) line.classList.add(className);
 
-    bootReady = true;
-    prompt.classList.add("ready");
-    scrollBottom(bootConsole);
+        line.textContent = text || "\u00a0";
+        output.appendChild(line);
+        scrollBottom(bootConsole);
+      }
 
-    enter.focus({ preventScroll: true });
-  }
+      function createTask(label) {
+        const row = document.createElement("div");
+        row.className = "boot-task";
 
-  /* STAGE 02 — PERSONALIZED TERMINAL LOGIN */
+        const command = document.createElement("span");
+        command.className = "task-label";
+        command.textContent = "> " + label;
 
-  function createTerminalLine(prefix = "") {
-    const line = document.createElement("div");
-    line.className = "login-line";
+        const progress = document.createElement("span");
+        progress.className = "task-progress";
 
-    const label = document.createElement("span");
-    label.className = "login-prefix";
-    label.textContent = prefix;
+        row.append(command, progress);
+        output.appendChild(row);
 
-    const value = document.createElement("span");
+        scrollBottom(bootConsole);
+        return progress;
+      }
 
-    line.append(label, value);
-    loginOutput.appendChild(line);
+      function updateTask(progress, percentage) {
+        const n = Math.max(0, Math.min(100, Math.round(percentage)));
+        const filled = Math.round(n / 100 * BAR_WIDTH);
+        const bar = "#".repeat(filled) + "-".repeat(BAR_WIDTH - filled);
 
-    scrollBottom(loginConsole);
-    return value;
-  }
+        progress.textContent =
+          `[${bar}] ${String(n).padStart(3, "0")}%`;
 
-  async function typeInto(element, text, speed) {
-    const cursor = document.createElement("span");
-    cursor.className = "cursor";
-    cursor.setAttribute("aria-hidden", "true");
-    element.after(cursor);
+        if (n === 100) {
+          progress.classList.add("complete");
+        }
+      }
 
-    for (const character of text) {
-      element.textContent += character;
-      scrollBottom(loginConsole);
-      await delay(speed);
-    }
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
 
-    cursor.remove();
-  }
+      function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      }
 
-  async function runLogin() {
-    loginStage.setAttribute("aria-hidden", "false");
-    loginStage.classList.add("active");
+      const easingFns = [
+        easeOutCubic,
+        easeInOutQuad,
+        easeOutCubic,
+        easeInOutQuad,
+        easeOutCubic,
+        easeInOutQuad,
+        easeOutCubic,
+        easeInOutQuad
+      ];
 
-    boot.remove();
-    await delay(300);
+      async function runBoot() {
+        addLine("SECURE BOOT", "bright");
+        addLine("────────────────────────────────────────", "separator");
+        addLine("");
 
-    // Automatically type the approved GitHub username.
-    await typeInto(
-      createTerminalLine("localhost login: "),
-      "sugirvassenthilkumar",
-      100
-    );
+        let elapsedBefore = 0;
 
-    await delay(250);
+        for (let i = 0; i < tasks.length; i++) {
+          const bar = createTask(tasks[i]);
+          const taskDuration = BOOT_DURATION * (taskWeights[i] / totalWeight);
+          const taskStart = performance.now();
+          const easing = easingFns[i] || easeOutCubic;
 
-    // Fictional masked password.
-    // No actual password is used or transmitted.
-    await typeInto(
-      createTerminalLine("Password: "),
-      "************",
-      75
-    );
+          updateTask(bar, 0);
 
-    await delay(400);
+          while (true) {
+            const elapsed = performance.now() - taskStart;
+            const rawProgress = Math.min(1, elapsed / taskDuration);
+            const easedProgress = easing(rawProgress);
+            const displayProgress = rawProgress >= 1 ? 100 : Math.min(99, easedProgress * 100);
 
-    createTerminalLine("");
+            updateTask(bar, displayProgress);
 
-    await typeInto(
-      createTerminalLine("sugirvassenthilkumar@localhost:~$ "),
-      "whoami",
-      140
-    );
+            if (rawProgress >= 1) break;
 
-    await delay(500);
+            await delay(reducedMotion ? 16 : 32);
+          }
 
-    portfolio.classList.add("unlocked");
-    loginStage.classList.add("exit");
+          updateTask(bar, 100);
+          elapsedBefore += taskDuration;
+        }
 
-    await delay(reducedMotion ? 0 : 450);
+        addLine("");
+        addLine("[ OK ] SYSTEM READY", "bright");
 
-    loginStage.remove();
+        bootReady = true;
+        prompt.classList.add("ready");
+        scrollBottom(bootConsole);
 
-    portfolio.setAttribute("tabindex", "-1");
-    portfolio.focus({ preventScroll: true });
-  }
+        enter.focus({ preventScroll: true });
+      }
 
-  function enterConsole() {
-    if (!bootReady || loginStarted) return;
+      /* STAGE 02 — PERSONALIZED TERMINAL LOGIN */
 
-    loginStarted = true;
-    runLogin();
-  }
+      function createTerminalLine(prefix = "") {
+        const line = document.createElement("div");
+        line.className = "login-line";
 
-  enter.addEventListener("click", enterConsole);
+        const label = document.createElement("span");
+        label.className = "login-prefix";
+        label.textContent = prefix;
 
-  document.addEventListener("keydown", event => {
-    if (
-      event.key === "Enter" &&
-      bootReady &&
-      !loginStarted
-    ) {
-      event.preventDefault();
-      enterConsole();
-    }
-  });
+        const value = document.createElement("span");
 
-  runBoot();
-})();
-</script>
+        line.append(label, value);
+        loginOutput.appendChild(line);
 
+        scrollBottom(loginConsole);
+        return value;
+      }
+
+      async function typeInto(element, text, speed) {
+        const cursor = document.createElement("span");
+        cursor.className = "cursor";
+        cursor.setAttribute("aria-hidden", "true");
+        element.after(cursor);
+
+        for (const character of text) {
+          element.textContent += character;
+          scrollBottom(loginConsole);
+          await delay(speed);
+        }
+
+        cursor.remove();
+      }
+
+      async function simulateSilentPassword(element, duration) {
+        const cursor = document.createElement("span");
+        cursor.className = "cursor";
+        cursor.setAttribute("aria-hidden", "true");
+        element.after(cursor);
+
+        await delay(duration);
+
+        cursor.remove();
+      }
+
+      async function runLogin() {
+        loginStage.setAttribute("aria-hidden", "false");
+        loginStage.classList.add("active");
+
+        boot.remove();
+        await delay(300);
+
+        await typeInto(
+          createTerminalLine("localhost login: "),
+          "sugirvassenthilkumar",
+          100
+        );
+
+        await delay(250);
+
+        // Realistic terminal-style password behavior:
+        // no visible asterisks, just a silent pause/cursor.
+        await simulateSilentPassword(
+          createTerminalLine("Password: "),
+          950
+        );
+
+        await delay(300);
+
+        createTerminalLine("");
+
+        await typeInto(
+          createTerminalLine("sugirvassenthilkumar@localhost:~$ "),
+          "whoami",
+          140
+        );
+
+        await delay(500);
+
+        portfolio.classList.add("unlocked");
+        loginStage.classList.add("exit");
+
+        await delay(reducedMotion ? 0 : 450);
+
+        loginStage.remove();
+
+        portfolio.setAttribute("tabindex", "-1");
+        portfolio.focus({ preventScroll: true });
+      }
+
+      function enterConsole() {
+        if (!bootReady || loginStarted) return;
+
+        loginStarted = true;
+        runLogin();
+      }
+
+      enter.addEventListener("click", enterConsole);
+
+      document.addEventListener("keydown", event => {
+        if (
+          event.key === "Enter" &&
+          bootReady &&
+          !loginStarted
+        ) {
+          event.preventDefault();
+          enterConsole();
+        }
+      });
+
+      runBoot();
+    })();
+  </script>
 </body>
 </html>
