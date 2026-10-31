@@ -16,30 +16,38 @@
     :root {
       color-scheme: dark;
       --fg: #f2f2f2;
+      --muted: #c6c6c6;
       --mono: "SFMono-Regular", Menlo, Monaco,
               Consolas, "Liberation Mono", monospace;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
 
-    html, body {
+    html {
+      min-height: 100%;
+      background: #000;
+    }
+
+    body {
       margin: 0;
       min-height: 100%;
       background: #000;
       color: var(--fg);
-    }
-
-    body {
       font-family: var(--mono);
     }
 
-    button, a {
+    button,
+    a {
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* PORTFOLIO */
+    /* =====================================
+       PORTFOLIO
+    ===================================== */
 
     #portfolio {
       min-height: 100svh;
@@ -47,13 +55,22 @@
       place-items: center;
       padding: 80px 24px;
       text-align: center;
-      font-family: system-ui, sans-serif;
       background: #000;
       border: none;
+      font-family: system-ui, sans-serif;
     }
 
     #portfolio:focus {
       outline: none;
+    }
+
+    .js #portfolio {
+      visibility: hidden;
+    }
+
+    .js #portfolio.unlocked {
+      visibility: visible;
+      animation: reveal .45s ease both;
     }
 
     .page {
@@ -69,37 +86,21 @@
       display: none !important;
     }
 
+    /* =====================================
+       HOME — UNCHANGED
+    ===================================== */
+
     #portfolio h1 {
       margin: 0;
       font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 700;
       letter-spacing: -.04em;
       line-height: 1.1;
     }
 
-    .section-title {
-      margin: 0;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      letter-spacing: -.035em;
-      font-weight: 700;
-    }
-
-    .section-placeholder {
-      margin: 18px 0 0;
-      color: #777;
-      font-size: .85rem;
-      letter-spacing: .02em;
-    }
-
-    .js #portfolio {
-      visibility: hidden;
-    }
-
-    .js #portfolio.unlocked {
-      visibility: visible;
-      animation: reveal .45s ease both;
-    }
-
-    /* LEFT NAVIGATION */
+    /* =====================================
+       LEFT NAVIGATION — V24
+    ===================================== */
 
     .site-nav {
       position: fixed;
@@ -107,21 +108,23 @@
       left: clamp(24px, 4vw, 60px);
       transform: translateY(-50%);
       z-index: 20;
+
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 17px;
+      gap: 19px;
+
       font-family: var(--mono);
     }
 
     .site-nav a {
       display: inline-block;
-      color: #777;
+      color: #999;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 400;
-      line-height: 1.4;
-      letter-spacing: .045em;
+      line-height: 1.5;
+      letter-spacing: .02em;
       white-space: nowrap;
       transition: color .2s ease;
     }
@@ -130,6 +133,10 @@
     .site-nav a:focus-visible,
     .site-nav a[aria-current="page"] {
       color: #fff;
+    }
+
+    .site-nav a[aria-current="page"] {
+      font-weight: 600;
     }
 
     .site-nav a:focus-visible {
@@ -148,7 +155,9 @@
       transition: opacity .35s ease;
     }
 
-    /* MOBILE MENU */
+    /* =====================================
+       MOBILE NAVIGATION
+    ===================================== */
 
     .menu-toggle {
       display: none;
@@ -156,12 +165,15 @@
       top: 23px;
       left: 20px;
       z-index: 40;
-      padding: 10px 12px;
+
+      padding: 12px 15px;
+
       background: #000;
       color: #fff;
       border: 1px solid #444;
       border-radius: 0;
-      font: 12px var(--mono);
+
+      font: 14px var(--mono);
       cursor: pointer;
     }
 
@@ -174,48 +186,83 @@
       visibility: hidden;
     }
 
-    /* ABOUT PAGE */
+    /* =====================================
+       CONTENT LAYOUT — V24
+    ===================================== */
 
-    #portfolio:has(#about.active) {
+    #portfolio:has(.content-page.active) {
       display: block;
-      padding: 90px 24px 110px;
       text-align: left;
+
+      padding-top: 90px;
+      padding-bottom: 120px;
+
+      padding-left: clamp(
+        240px,
+        27vw,
+        420px
+      );
+
+      padding-right: clamp(
+        30px,
+        5vw,
+        90px
+      );
     }
 
-    #about {
-      max-width: 760px;
-      margin: 0 auto;
+    .content-page {
+      width: 100%;
+      max-width: 840px;
+      margin: 0;
     }
 
-    #about .section-title {
-      margin-bottom: 48px;
+    .section-title {
+      margin: 0 0 52px;
+
+      color: #fff;
       font-family: var(--mono);
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.15;
       letter-spacing: -.04em;
     }
 
+    .section-placeholder {
+      margin: 20px 0 0;
+      color: #aaa;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    /* =====================================
+       ABOUT PAGE — V24
+    ===================================== */
+
     .about-block {
-      padding: 30px 0;
-      border-top: 1px solid #242424;
+      padding: 38px 0;
+      border-top: 1px solid #292929;
     }
 
     .about-heading {
-      margin: 0 0 22px;
+      margin: 0 0 26px;
+
       color: #fff;
       font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .08em;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.6;
+      letter-spacing: .045em;
     }
 
     .about-body {
-      color: #bcbcbc;
-      font-size: 15px;
-      line-height: 1.95;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.85;
+      overflow-wrap: break-word;
     }
 
     .about-body p {
-      margin: 0 0 18px;
+      margin: 0 0 22px;
     }
 
     .about-body p:last-child {
@@ -227,20 +274,22 @@
       font-weight: 600;
     }
 
+    /* EDUCATION */
+
     .about-list {
       display: grid;
-      gap: 16px;
+      gap: 19px;
       margin: 0;
     }
 
     .about-list div {
       display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 16px;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 20px;
     }
 
     .about-list dt {
-      color: #777;
+      color: #999;
     }
 
     .about-list dd {
@@ -248,8 +297,10 @@
       color: #eee;
     }
 
+    /* FOCUS AND JOURNEY */
+
     .about-entry {
-      margin-bottom: 25px;
+      margin-bottom: 32px;
     }
 
     .about-entry:last-child {
@@ -257,79 +308,70 @@
     }
 
     .about-entry h4 {
-      margin: 0 0 7px;
+      margin: 0 0 10px;
       color: #fff;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 600;
+      line-height: 1.5;
     }
 
     .about-entry p {
       margin: 0;
     }
 
-    /* CONTACT PAGE — V23 */
-
-    #portfolio:has(#contact.active) {
-      display: block;
-      padding: 90px 24px 110px;
-      text-align: left;
-    }
-
-    #contact {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    #contact .section-title {
-      margin-bottom: 48px;
-      font-family: var(--mono);
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: -.04em;
-    }
+    /* =====================================
+       CONTACT PAGE — V24
+    ===================================== */
 
     .contact-list {
-      border-top: 1px solid #242424;
+      border-top: 1px solid #292929;
     }
 
     .contact-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
-      padding: 28px 0;
-      border-bottom: 1px solid #242424;
+      gap: 28px;
+
+      padding: 34px 0;
+
+      border-bottom: 1px solid #292929;
+
       color: #fff;
       text-decoration: none;
-      transition: color .2s ease;
     }
 
     .contact-content {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       min-width: 0;
     }
 
     .contact-label {
       color: #fff;
       font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .08em;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: .045em;
     }
 
     .contact-value {
-      color: #999;
-      font-size: 15px;
-      line-height: 1.6;
+      color: #bbb;
+      font-size: 17px;
+      line-height: 1.65;
       overflow-wrap: anywhere;
+      transition: color .2s ease;
     }
 
     .contact-arrow {
       flex-shrink: 0;
-      color: #777;
+      color: #999;
+
       font-family: var(--mono);
-      font-size: 19px;
+      font-size: 22px;
+
       transition:
         color .2s ease,
         transform .2s ease;
@@ -351,7 +393,9 @@
       outline-offset: 5px;
     }
 
-    /* TERMINAL STAGES */
+    /* =====================================
+       TERMINAL STAGES — UNCHANGED
+    ===================================== */
 
     .terminal-stage {
       display: none;
@@ -390,7 +434,9 @@
       min-width: 0;
       overflow-y: auto;
       overscroll-behavior: contain;
+
       padding: clamp(24px, 4vw, 60px);
+
       scrollbar-width: thin;
       scrollbar-color: #333 #000;
     }
@@ -478,9 +524,11 @@
       align-items: center;
       gap: 10px;
       padding: 5px 0;
+
       background: transparent;
       border: 0;
       color: #fff;
+
       cursor: pointer;
       text-align: left;
       font: inherit;
@@ -516,18 +564,32 @@
       }
     }
 
-    /* TABLET */
+    /* =====================================
+       TABLET
+    ===================================== */
 
     @media (max-width: 1050px) and (min-width: 801px) {
-      #about,
-      #contact {
-        margin-left: 190px;
-        margin-right: 20px;
-        max-width: none;
+      .site-nav {
+        gap: 17px;
+      }
+
+      .site-nav a {
+        font-size: 14px;
+      }
+
+      #portfolio:has(.content-page.active) {
+        padding-left: 255px;
+        padding-right: 32px;
+      }
+
+      .section-title {
+        font-size: 42px;
       }
     }
 
-    /* MOBILE */
+    /* =====================================
+       MOBILE
+    ===================================== */
 
     @media (max-width: 800px) {
       .menu-toggle {
@@ -542,20 +604,25 @@
         top: 0;
         left: 0;
         bottom: 0;
-        width: min(280px, 85vw);
-        padding: 90px 28px 30px;
+
+        width: min(300px, 85vw);
+
+        padding: 95px 28px 35px;
+
         transform: translateX(-100%);
         align-items: flex-start;
         justify-content: center;
-        gap: 19px;
+        gap: 20px;
+
         background: #000;
         border-right: 1px solid #222;
+
         overflow-y: auto;
         transition: transform .25s ease;
       }
 
       .site-nav a {
-        font-size: 13px;
+        font-size: 15px;
       }
 
       .js body.site-ready .site-nav {
@@ -577,24 +644,40 @@
         font-size: clamp(1.9rem, 7vw, 3.5rem);
       }
 
-      #portfolio:has(#about.active),
-      #portfolio:has(#contact.active) {
-        padding: 100px 24px 80px;
+      #portfolio:has(.content-page.active) {
+        padding: 110px 26px 90px;
       }
 
-      #about,
-      #contact {
-        max-width: 650px;
+      .content-page {
+        max-width: 680px;
+        margin: 0 auto;
       }
 
-      #about .section-title,
-      #contact .section-title {
-        margin-bottom: 40px;
+      .section-title {
+        font-size: clamp(34px, 7vw, 44px);
+        margin-bottom: 44px;
+      }
+
+      .about-block {
+        padding: 32px 0;
+      }
+
+      .about-heading,
+      .contact-label {
+        font-size: 14px;
       }
 
       .about-body {
-        font-size: 14px;
-        line-height: 1.85;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .about-entry h4 {
+        font-size: 17px;
+      }
+
+      .contact-value {
+        font-size: 16px;
       }
     }
 
@@ -626,22 +709,24 @@
       }
 
       .about-list div {
-        grid-template-columns: 85px 1fr;
+        grid-template-columns: 90px minmax(0, 1fr);
         gap: 12px;
       }
 
       .contact-item {
-        gap: 14px;
-        padding: 24px 0;
-      }
-
-      .contact-value {
-        font-size: 13px;
+        padding: 27px 0;
+        gap: 16px;
       }
     }
 
+    /* =====================================
+       REDUCED MOTION
+    ===================================== */
+
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
       }
@@ -651,7 +736,9 @@
 
 <body>
 
-  <!-- STAGE 01 — SECURE BOOT -->
+  <!-- ===================================
+       STAGE 01 — SECURE BOOT
+  ==================================== -->
 
   <section
     id="boot-stage"
@@ -660,6 +747,7 @@
   >
     <div class="console" id="boot-console">
       <div class="console-content">
+
         <div id="output" aria-hidden="true"></div>
 
         <div class="prompt" id="prompt">
@@ -668,16 +756,26 @@
             ./launch
           </div>
 
-          <button id="enter" class="enter" type="button">
+          <button
+            id="enter"
+            class="enter"
+            type="button"
+          >
             Press ENTER to continue
-            <span class="cursor" aria-hidden="true"></span>
+            <span
+              class="cursor"
+              aria-hidden="true"
+            ></span>
           </button>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- STAGE 02 — TERMINAL LOGIN -->
+  <!-- ===================================
+       STAGE 02 — TERMINAL LOGIN
+  ==================================== -->
 
   <section
     id="login-stage"
@@ -692,7 +790,9 @@
     </div>
   </section>
 
-  <!-- LEFT NAVIGATION -->
+  <!-- ===================================
+       NAVIGATION
+  ==================================== -->
 
   <button
     class="menu-toggle"
@@ -705,7 +805,11 @@
     &gt; MENU
   </button>
 
-  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+  <nav
+    class="site-nav"
+    id="site-nav"
+    aria-label="Main navigation"
+  >
     <a href="#home" data-page="home">&gt; HOME</a>
     <a href="#about" data-page="about">&gt; ABOUT</a>
     <a href="#projects" data-page="projects">&gt; PROJECTS</a>
@@ -718,7 +822,9 @@
     <a href="#contact" data-page="contact">&gt; CONTACT</a>
   </nav>
 
-  <!-- PORTFOLIO -->
+  <!-- ===================================
+       PORTFOLIO
+  ==================================== -->
 
   <main id="portfolio">
 
@@ -728,16 +834,24 @@
       <h1>SUGIRVAS SENTHILKUMAR</h1>
     </section>
 
-    <!-- ABOUT -->
+    <!-- =================================
+         ABOUT
+    ================================== -->
 
-    <section class="page" id="about" hidden>
+    <section
+      class="page content-page"
+      id="about"
+      hidden
+    >
 
       <h2 class="section-title">ABOUT</h2>
 
-      <!-- 01 — INTRODUCTION -->
+      <!-- INTRODUCTION -->
 
       <section class="about-block">
-        <h3 class="about-heading">01 — INTRODUCTION</h3>
+        <h3 class="about-heading">
+          01 — INTRODUCTION
+        </h3>
 
         <div class="about-body">
           <p>
@@ -760,42 +874,55 @@
         </div>
       </section>
 
-      <!-- 02 — EDUCATION -->
+      <!-- EDUCATION -->
 
       <section class="about-block">
-        <h3 class="about-heading">02 — EDUCATION</h3>
+        <h3 class="about-heading">
+          02 — EDUCATION
+        </h3>
 
         <div class="about-body">
+
           <p>
-            <strong>SRM Institute of Science and Technology</strong><br>
+            <strong>
+              SRM Institute of Science and Technology
+            </strong><br>
             Ramapuram Campus, Chennai
           </p>
 
           <dl class="about-list">
+
             <div>
               <dt>Degree</dt>
               <dd>Bachelor of Technology (B.Tech)</dd>
             </div>
+
             <div>
               <dt>Branch</dt>
               <dd>Computer Science and Engineering</dd>
             </div>
+
             <div>
               <dt>Duration</dt>
               <dd>2023–2027</dd>
             </div>
+
             <div>
               <dt>CGPA</dt>
               <dd>8.56 / 10</dd>
             </div>
+
           </dl>
+
         </div>
       </section>
 
-      <!-- 03 — MY FOCUS -->
+      <!-- MY FOCUS -->
 
       <section class="about-block">
-        <h3 class="about-heading">03 — MY FOCUS</h3>
+        <h3 class="about-heading">
+          03 — MY FOCUS
+        </h3>
 
         <div class="about-body">
 
@@ -835,12 +962,15 @@
         </div>
       </section>
 
-      <!-- 04 — HOW I WORK -->
+      <!-- HOW I WORK -->
 
       <section class="about-block">
-        <h3 class="about-heading">04 — HOW I WORK</h3>
+        <h3 class="about-heading">
+          04 — HOW I WORK
+        </h3>
 
         <div class="about-body">
+
           <p>I learn best by doing.</p>
 
           <p>
@@ -853,13 +983,16 @@
             blindly copying solutions. I value curiosity,
             patience, independent thinking, and continuous learning.
           </p>
+
         </div>
       </section>
 
-      <!-- 05 — MY JOURNEY -->
+      <!-- MY JOURNEY -->
 
       <section class="about-block">
-        <h3 class="about-heading">05 — MY JOURNEY</h3>
+        <h3 class="about-heading">
+          05 — MY JOURNEY
+        </h3>
 
         <div class="about-body">
 
@@ -911,12 +1044,15 @@
         </div>
       </section>
 
-      <!-- 06 — MY GOAL -->
+      <!-- MY GOAL -->
 
       <section class="about-block">
-        <h3 class="about-heading">06 — MY GOAL</h3>
+        <h3 class="about-heading">
+          06 — MY GOAL
+        </h3>
 
         <div class="about-body">
+
           <p>
             My ambition is to become one of the world's most
             capable ethical hackers and cybersecurity researchers.
@@ -934,55 +1070,106 @@
             learning, practical experience, responsible conduct,
             and work that genuinely helps others.
           </p>
+
         </div>
       </section>
 
     </section>
 
-    <!-- OTHER SECTIONS -->
+    <!-- =================================
+         PROJECTS — ON HOLD
+    ================================== -->
 
-    <section class="page" id="projects" hidden>
+    <section
+      class="page content-page"
+      id="projects"
+      hidden
+    >
       <h2 class="section-title">PROJECTS</h2>
       <p class="section-placeholder">Coming soon.</p>
     </section>
 
-    <section class="page" id="skills" hidden>
+    <!-- SKILLS -->
+
+    <section
+      class="page content-page"
+      id="skills"
+      hidden
+    >
       <h2 class="section-title">SKILLS</h2>
       <p class="section-placeholder">Coming soon.</p>
     </section>
 
-    <section class="page" id="tools" hidden>
+    <!-- TOOLS -->
+
+    <section
+      class="page content-page"
+      id="tools"
+      hidden
+    >
       <h2 class="section-title">TOOLS</h2>
       <p class="section-placeholder">Coming soon.</p>
     </section>
 
-    <section class="page" id="labs" hidden>
+    <!-- LABS -->
+
+    <section
+      class="page content-page"
+      id="labs"
+      hidden
+    >
       <h2 class="section-title">LABS</h2>
       <p class="section-placeholder">Coming soon.</p>
     </section>
 
-    <section class="page" id="research" hidden>
+    <!-- RESEARCH -->
+
+    <section
+      class="page content-page"
+      id="research"
+      hidden
+    >
       <h2 class="section-title">RESEARCH</h2>
       <p class="section-placeholder">Coming soon.</p>
     </section>
 
-    <section class="page" id="blog" hidden>
+    <!-- BLOG -->
+
+    <section
+      class="page content-page"
+      id="blog"
+      hidden
+    >
       <h2 class="section-title">BLOG</h2>
       <p class="section-placeholder">Coming soon.</p>
     </section>
 
-    <section class="page" id="achievements" hidden>
+    <!-- ACHIEVEMENTS -->
+
+    <section
+      class="page content-page"
+      id="achievements"
+      hidden
+    >
       <h2 class="section-title">ACHIEVEMENTS</h2>
       <p class="section-placeholder">Coming soon.</p>
     </section>
 
-    <!-- CONTACT — V23 -->
+    <!-- =================================
+         CONTACT
+    ================================== -->
 
-    <section class="page" id="contact" hidden>
+    <section
+      class="page content-page"
+      id="contact"
+      hidden
+    >
 
       <h2 class="section-title">CONTACT</h2>
 
       <div class="contact-list">
+
+        <!-- EMAIL -->
 
         <a
           class="contact-item"
@@ -990,16 +1177,24 @@
           aria-label="Send an email to Sugirvas"
         >
           <span class="contact-content">
-            <span class="contact-label">EMAIL</span>
+
+            <span class="contact-label">
+              EMAIL
+            </span>
+
             <span class="contact-value">
               sugirvas01@gmail.com
             </span>
+
           </span>
 
-          <span class="contact-arrow" aria-hidden="true">
-            ↗
-          </span>
+          <span
+            class="contact-arrow"
+            aria-hidden="true"
+          >↗</span>
         </a>
+
+        <!-- GITHUB -->
 
         <a
           class="contact-item"
@@ -1009,16 +1204,24 @@
           aria-label="Visit Sugirvas on GitHub"
         >
           <span class="contact-content">
-            <span class="contact-label">GITHUB</span>
+
+            <span class="contact-label">
+              GITHUB
+            </span>
+
             <span class="contact-value">
               github.com/SUGIRVASSENTHILKUMAR
             </span>
+
           </span>
 
-          <span class="contact-arrow" aria-hidden="true">
-            ↗
-          </span>
+          <span
+            class="contact-arrow"
+            aria-hidden="true"
+          >↗</span>
         </a>
+
+        <!-- LINKEDIN -->
 
         <a
           class="contact-item"
@@ -1028,15 +1231,21 @@
           aria-label="Visit Sugirvas on LinkedIn"
         >
           <span class="contact-content">
-            <span class="contact-label">LINKEDIN</span>
+
+            <span class="contact-label">
+              LINKEDIN
+            </span>
+
             <span class="contact-value">
               linkedin.com/in/sugirvassenthilkumar/
             </span>
+
           </span>
 
-          <span class="contact-arrow" aria-hidden="true">
-            ↗
-          </span>
+          <span
+            class="contact-arrow"
+            aria-hidden="true"
+          >↗</span>
         </a>
 
       </div>
@@ -1062,9 +1271,11 @@
 
       const menuToggle = document.getElementById("menu-toggle");
       const nav = document.getElementById("site-nav");
+
       const navLinks = Array.from(
         nav.querySelectorAll("[data-page]")
       );
+
       const pages = Array.from(
         portfolio.querySelectorAll(".page")
       );
@@ -1085,25 +1296,39 @@
           setTimeout(resolve, Math.max(0, ms))
         );
 
-      /* NAVIGATION */
+      /* ===================================
+         NAVIGATION
+      ==================================== */
 
       function closeMenu() {
         document.body.classList.remove("menu-open");
-        menuToggle.setAttribute("aria-expanded", "false");
+
+        menuToggle.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
         menuToggle.setAttribute(
           "aria-label",
           "Open navigation"
         );
+
         menuToggle.textContent = "> MENU";
       }
 
       function openMenu() {
         document.body.classList.add("menu-open");
-        menuToggle.setAttribute("aria-expanded", "true");
+
+        menuToggle.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
         menuToggle.setAttribute(
           "aria-label",
           "Close navigation"
         );
+
         menuToggle.textContent = "× CLOSE";
       }
 
@@ -1122,15 +1347,20 @@
 
         pages.forEach(page => {
           const active = page.id === activeId;
+
           page.hidden = !active;
           page.classList.toggle("active", active);
         });
 
         navLinks.forEach(link => {
-          const active = link.dataset.page === activeId;
+          const active =
+            link.dataset.page === activeId;
 
           if (active) {
-            link.setAttribute("aria-current", "page");
+            link.setAttribute(
+              "aria-current",
+              "page"
+            );
           } else {
             link.removeAttribute("aria-current");
           }
@@ -1150,7 +1380,9 @@
       }
 
       menuToggle.addEventListener("click", () => {
-        if (document.body.classList.contains("menu-open")) {
+        if (
+          document.body.classList.contains("menu-open")
+        ) {
           closeMenu();
         } else {
           openMenu();
@@ -1159,13 +1391,19 @@
 
       navLinks.forEach(link => {
         link.addEventListener("click", () => {
-          if (location.hash === link.getAttribute("href")) {
+          if (
+            location.hash ===
+            link.getAttribute("href")
+          ) {
             showPage();
           }
         });
       });
 
-      window.addEventListener("hashchange", showPage);
+      window.addEventListener(
+        "hashchange",
+        showPage
+      );
 
       document.addEventListener("keydown", event => {
         if (event.key === "Escape") {
@@ -1175,7 +1413,9 @@
 
       showPage();
 
-      /* STAGE 01 — SECURE BOOT */
+      /* ===================================
+         STAGE 01 — SECURE BOOT
+      ==================================== */
 
       // Visual simulation only.
 
@@ -1237,10 +1477,13 @@
 
       function updateTask(progress, percentage) {
         const n = Math.max(
-          0, Math.min(100, Math.round(percentage))
+          0,
+          Math.min(100, Math.round(percentage))
         );
 
-        const filled = Math.round(n / 100 * BAR_WIDTH);
+        const filled = Math.round(
+          n / 100 * BAR_WIDTH
+        );
 
         const bar =
           "#".repeat(filled) +
@@ -1279,10 +1522,12 @@
         const start = performance.now();
 
         addLine("SECURE BOOT", "bright");
+
         addLine(
           "────────────────────────────────────────",
           "separator"
         );
+
         addLine("");
 
         let cumulativeWeight = 0;
@@ -1312,7 +1557,8 @@
               1,
               Math.max(
                 0,
-                (performance.now() - taskStart) / duration
+                (performance.now() - taskStart) /
+                  duration
               )
             );
 
@@ -1325,7 +1571,9 @@
                 : Math.min(99, eased * 100)
             );
 
-            if (raw >= 1) break;
+            if (raw >= 1) {
+              break;
+            }
 
             await delay(32);
           }
@@ -1334,7 +1582,10 @@
         }
 
         addLine("");
-        addLine("[ OK ] SYSTEM READY", "bright");
+        addLine(
+          "[ OK ] SYSTEM READY",
+          "bright"
+        );
 
         const remaining =
           start + BOOT_DURATION - performance.now();
@@ -1344,13 +1595,18 @@
         }
 
         bootReady = true;
+
         prompt.classList.add("ready");
         scrollBottom(bootConsole);
 
-        enter.focus({ preventScroll: true });
+        enter.focus({
+          preventScroll: true
+        });
       }
 
-      /* STAGE 02 — TERMINAL LOGIN */
+      /* ===================================
+         STAGE 02 — TERMINAL LOGIN
+      ==================================== */
 
       function createTerminalLine(prefix = "") {
         const line = document.createElement("div");
@@ -1372,14 +1628,19 @@
       function attachCursor(element) {
         const cursor = document.createElement("span");
         cursor.className = "cursor";
-        cursor.setAttribute("aria-hidden", "true");
+
+        cursor.setAttribute(
+          "aria-hidden",
+          "true"
+        );
 
         element.after(cursor);
         return cursor;
       }
 
       async function waitUntil(target) {
-        const remaining = target - performance.now();
+        const remaining =
+          target - performance.now();
 
         if (remaining > 0) {
           await delay(remaining);
@@ -1402,6 +1663,7 @@
           );
 
           element.textContent += chars[i];
+
           scrollBottom(loginConsole);
         }
 
@@ -1411,9 +1673,12 @@
       async function runLogin() {
         const start = performance.now();
 
-        loginStage.setAttribute("aria-hidden", "false");
-        loginStage.classList.add("active");
+        loginStage.setAttribute(
+          "aria-hidden",
+          "false"
+        );
 
+        loginStage.classList.add("active");
         boot.remove();
 
         await waitUntil(start + 150);
@@ -1427,22 +1692,32 @@
 
         await waitUntil(start + 2000);
 
-        const password = createTerminalLine("Password: ");
-        const passwordCursor = attachCursor(password);
+        const password =
+          createTerminalLine("Password: ");
+
+        const passwordCursor =
+          attachCursor(password);
 
         await waitUntil(start + 2650);
+
         passwordCursor.remove();
 
         await waitUntil(start + 2750);
+
         createTerminalLine("");
-        createTerminalLine("Login successful!");
+
+        createTerminalLine(
+          "Login successful!"
+        );
 
         await waitUntil(start + 2900);
+
         createTerminalLine(
           "Welcome, sugirvassenthilkumar!"
         );
 
         await waitUntil(start + 3400);
+
         createTerminalLine("");
 
         await typeWithin(
@@ -1454,17 +1729,28 @@
           1300
         );
 
-        await waitUntil(start + LOGIN_DURATION);
+        await waitUntil(
+          start + LOGIN_DURATION
+        );
 
         portfolio.classList.add("unlocked");
-        document.body.classList.add("site-ready");
+
+        document.body.classList.add(
+          "site-ready"
+        );
+
         loginStage.classList.add("exit");
 
-        await delay(reducedMotion ? 0 : 450);
+        await delay(
+          reducedMotion ? 0 : 450
+        );
 
         loginStage.remove();
 
-        portfolio.setAttribute("tabindex", "-1");
+        portfolio.setAttribute(
+          "tabindex",
+          "-1"
+        );
 
         portfolio.focus({
           preventScroll: true,
@@ -1472,16 +1758,23 @@
         });
       }
 
-      /* ENTER INTERACTION */
+      /* ===================================
+         ENTER INTERACTION
+      ==================================== */
 
       function enterConsole() {
-        if (!bootReady || loginStarted) return;
+        if (!bootReady || loginStarted) {
+          return;
+        }
 
         loginStarted = true;
         runLogin();
       }
 
-      enter.addEventListener("click", enterConsole);
+      enter.addEventListener(
+        "click",
+        enterConsole
+      );
 
       document.addEventListener("keydown", event => {
         if (
