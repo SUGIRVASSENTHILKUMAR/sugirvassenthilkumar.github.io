@@ -215,7 +215,9 @@ body { font-family: var(--mono); }
     line-height: 1.75;
   }
 
-  .line, .login-line { min-height: 1.75em; }
+  .line, .login-line {
+    min-height: 1.75em;
+  }
 
   .boot-task {
     grid-template-columns: 1fr;
@@ -223,7 +225,9 @@ body { font-family: var(--mono); }
     margin-bottom: 6px;
   }
 
-  .task-progress { padding-left: 2ch; }
+  .task-progress {
+    padding-left: 2ch;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -264,7 +268,7 @@ body { font-family: var(--mono); }
   </div>
 </section>
 
-<!-- STAGE 02: UNCHANGED LOGIN -->
+<!-- STAGE 02: TERMINAL LOGIN -->
 
 <section id="login-stage"
          class="terminal-stage"
@@ -418,7 +422,7 @@ body { font-family: var(--mono); }
     enter.focus({ preventScroll: true });
   }
 
-  /* STAGE 02 — ORIGINAL ANONYMOUS TERMINAL */
+  /* STAGE 02 — PERSONALIZED TERMINAL LOGIN */
 
   function createTerminalLine(prefix = "") {
     const line = document.createElement("div");
@@ -459,14 +463,17 @@ body { font-family: var(--mono); }
     boot.remove();
     await delay(300);
 
+    // Automatically type the approved GitHub username.
     await typeInto(
       createTerminalLine("localhost login: "),
-      "guest",
+      "sugirvassenthilkumar",
       100
     );
 
     await delay(250);
 
+    // Fictional masked password.
+    // No actual password is used or transmitted.
     await typeInto(
       createTerminalLine("Password: "),
       "************",
@@ -474,10 +481,11 @@ body { font-family: var(--mono); }
     );
 
     await delay(400);
+
     createTerminalLine("");
 
     await typeInto(
-      createTerminalLine("guest@localhost:~$ "),
+      createTerminalLine("sugirvassenthilkumar@localhost:~$ "),
       "whoami",
       140
     );
@@ -518,5 +526,6 @@ body { font-family: var(--mono); }
   runBoot();
 })();
 </script>
+
 </body>
 </html>
