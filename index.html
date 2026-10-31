@@ -65,6 +65,10 @@
       display: block;
     }
 
+    .page[hidden] {
+      display: none !important;
+    }
+
     #portfolio h1 {
       margin: 0;
       font-size: clamp(2rem, 6vw, 4rem);
@@ -168,6 +172,99 @@
 
     .js .menu-toggle {
       visibility: hidden;
+    }
+
+    /* ABOUT PAGE */
+
+    #portfolio:has(#about.active) {
+      display: block;
+      padding: 90px 24px 110px;
+      text-align: left;
+    }
+
+    #about {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    #about .section-title {
+      margin-bottom: 48px;
+      font-family: var(--mono);
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -.04em;
+    }
+
+    .about-block {
+      padding: 30px 0;
+      border-top: 1px solid #242424;
+    }
+
+    .about-heading {
+      margin: 0 0 22px;
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .08em;
+    }
+
+    .about-body {
+      color: #bcbcbc;
+      font-size: 15px;
+      line-height: 1.95;
+    }
+
+    .about-body p {
+      margin: 0 0 18px;
+    }
+
+    .about-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-body strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .about-list {
+      display: grid;
+      gap: 16px;
+      margin: 0;
+    }
+
+    .about-list div {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 16px;
+    }
+
+    .about-list dt {
+      color: #777;
+    }
+
+    .about-list dd {
+      margin: 0;
+      color: #eee;
+    }
+
+    .about-entry {
+      margin-bottom: 25px;
+    }
+
+    .about-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-entry h4 {
+      margin: 0 0 7px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .about-entry p {
+      margin: 0;
     }
 
     /* TERMINAL STAGES */
@@ -337,6 +434,14 @@
 
     /* MOBILE */
 
+    @media (max-width: 1050px) and (min-width: 801px) {
+      #about {
+        margin-left: 190px;
+        margin-right: 20px;
+        max-width: none;
+      }
+    }
+
     @media (max-width: 800px) {
       .menu-toggle {
         display: block;
@@ -384,6 +489,23 @@
       #portfolio h1 {
         font-size: clamp(1.9rem, 7vw, 3.5rem);
       }
+
+      #portfolio:has(#about.active) {
+        padding: 100px 24px 80px;
+      }
+
+      #about {
+        max-width: 650px;
+      }
+
+      #about .section-title {
+        margin-bottom: 40px;
+      }
+
+      .about-body {
+        font-size: 14px;
+        line-height: 1.85;
+      }
     }
 
     @media (max-width: 650px) {
@@ -411,6 +533,11 @@
 
       .task-progress {
         padding-left: 2ch;
+      }
+
+      .about-list div {
+        grid-template-columns: 85px 1fr;
+        gap: 12px;
       }
     }
 
@@ -502,10 +629,218 @@
       <h1>SUGIRVAS SENTHILKUMAR</h1>
     </section>
 
+    <!-- ABOUT -->
+
     <section class="page" id="about" hidden>
+
       <h2 class="section-title">ABOUT</h2>
-      <p class="section-placeholder">Coming soon.</p>
+
+      <!-- 01 — INTRODUCTION -->
+
+      <section class="about-block">
+        <h3 class="about-heading">01 — INTRODUCTION</h3>
+
+        <div class="about-body">
+          <p>
+            I'm a Computer Science and Engineering student at
+            SRM Institute of Science and Technology, with a strong
+            interest in cybersecurity and software development.
+          </p>
+
+          <p>
+            My curiosity comes from wanting to understand how
+            computers, networks, and systems work, how hackers
+            find weaknesses, and how those weaknesses can be fixed.
+          </p>
+
+          <p>
+            I explore these interests by building software,
+            learning ethical hacking, and practising security
+            testing in authorized environments.
+          </p>
+        </div>
+      </section>
+
+      <!-- 02 — EDUCATION -->
+
+      <section class="about-block">
+        <h3 class="about-heading">02 — EDUCATION</h3>
+
+        <div class="about-body">
+          <p>
+            <strong>SRM Institute of Science and Technology</strong><br>
+            Ramapuram Campus, Chennai
+          </p>
+
+          <dl class="about-list">
+            <div>
+              <dt>Degree</dt>
+              <dd>Bachelor of Technology (B.Tech)</dd>
+            </div>
+            <div>
+              <dt>Branch</dt>
+              <dd>Computer Science and Engineering</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd>2023–2027</dd>
+            </div>
+            <div>
+              <dt>CGPA</dt>
+              <dd>8.56 / 10</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- 03 — MY FOCUS -->
+
+      <section class="about-block">
+        <h3 class="about-heading">03 — MY FOCUS</h3>
+
+        <div class="about-body">
+
+          <div class="about-entry">
+            <h4>Ethical Hacking &amp; Security Testing</h4>
+            <p>
+              Learning how attackers find weaknesses and how
+              security professionals identify and fix them.
+            </p>
+          </div>
+
+          <div class="about-entry">
+            <h4>Networking &amp; System Security</h4>
+            <p>
+              Understanding how devices communicate, how systems
+              operate, and how to protect them.
+            </p>
+          </div>
+
+          <div class="about-entry">
+            <h4>Software Development</h4>
+            <p>
+              Building useful applications, security platforms,
+              and automation tools.
+            </p>
+          </div>
+
+          <div class="about-entry">
+            <h4>Security Research</h4>
+            <p>
+              Studying vulnerabilities, exploring new security
+              techniques, and understanding how attacks and
+              defenses work.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 04 — HOW I WORK -->
+
+      <section class="about-block">
+        <h3 class="about-heading">04 — HOW I WORK</h3>
+
+        <div class="about-body">
+          <p>I learn best by doing.</p>
+
+          <p>
+            I start by understanding how something works, then
+            experiment, build, test, identify mistakes, and improve.
+          </p>
+
+          <p>
+            I believe in understanding concepts rather than
+            blindly copying solutions. I value curiosity,
+            patience, independent thinking, and continuous learning.
+          </p>
+        </div>
+      </section>
+
+      <!-- 05 — MY JOURNEY -->
+
+      <section class="about-block">
+        <h3 class="about-heading">05 — MY JOURNEY</h3>
+
+        <div class="about-body">
+
+          <div class="about-entry">
+            <h4>2023 — Starting My Degree</h4>
+            <p>
+              Began studying Computer Science and Engineering
+              at SRM Institute of Science and Technology.
+            </p>
+          </div>
+
+          <div class="about-entry">
+            <h4>Building Real Projects</h4>
+            <p>
+              Developed Cyber Feed, a cybersecurity intelligence
+              platform that collects, organizes, and enriches
+              security information.
+            </p>
+          </div>
+
+          <div class="about-entry">
+            <h4>Exploring Cybersecurity</h4>
+            <p>
+              Started learning more about Linux, networking,
+              ethical hacking, web security, and security monitoring
+              through courses and hands-on practice.
+            </p>
+          </div>
+
+          <div class="about-entry">
+            <h4>Expanding My Work</h4>
+            <p>
+              Worked on security-focused projects including
+              SugiSOC, a security monitoring platform, and
+              SugiScope, a web security scanning project.
+            </p>
+          </div>
+
+          <div class="about-entry">
+            <h4>Today — Continuing to Improve</h4>
+            <p>
+              Strengthening my foundations, practising in
+              authorized security labs, and working toward
+              deeper technical knowledge and original
+              security research.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 06 — MY GOAL -->
+
+      <section class="about-block">
+        <h3 class="about-heading">06 — MY GOAL</h3>
+
+        <div class="about-body">
+          <p>
+            My ambition is to become one of the world's most
+            capable ethical hackers and cybersecurity researchers.
+          </p>
+
+          <p>
+            I want to understand technology deeply, discover
+            and help fix security weaknesses, build useful tools,
+            and use my knowledge to protect people and contribute
+            positively to society.
+          </p>
+
+          <p>
+            I believe becoming exceptional comes from consistent
+            learning, practical experience, responsible conduct,
+            and work that genuinely helps others.
+          </p>
+        </div>
+      </section>
+
     </section>
+
+    <!-- REMAINING SECTIONS -->
 
     <section class="page" id="projects" hidden>
       <h2 class="section-title">PROJECTS</h2>
@@ -646,6 +981,11 @@
             " — Sugirvas Senthilkumar";
 
         closeMenu();
+
+        window.scrollTo({
+          top: 0,
+          behavior: "instant"
+        });
       }
 
       menuToggle.addEventListener("click", () => {
@@ -675,6 +1015,8 @@
       showPage();
 
       /* STAGE 01 — SECURE BOOT */
+
+      // Visual simulation only.
 
       const tasks = [
         "initializing execution environment",
