@@ -2,1033 +2,755 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#000000">
-  <meta name="description"
-        content="Portfolio of Sugirvas Senthilkumar">
-  <title>Sugirvas Senthilkumar</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Portfolio of Sugirvas Senthilkumar">
+<title>Sugirvas Senthilkumar</title>
+<script>
+document.documentElement.classList.add("js");
+</script>
+<style>
+:root {
+  color-scheme: dark;
+  --fg: #f2f2f2;
+  --mono: "SFMono-Regular", Menlo, Monaco,
+    Consolas, "Liberation Mono", monospace;
+}
 
-  <script>
-    document.documentElement.classList.add("js");
-  </script>
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
-  <style>
-    :root {
-      color-scheme: dark;
-      --fg: #f2f2f2;
-      --mono: "SFMono-Regular", Menlo, Monaco,
-              Consolas, "Liberation Mono", monospace;
-    }
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #000;
+  color: var(--fg);
+}
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
+body { font-family: var(--mono); }
 
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      background: #000;
-      color: var(--fg);
-    }
+/* PORTFOLIO */
 
-    body {
-      font-family: var(--mono);
-    }
+#portfolio {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
 
-    /* PORTFOLIO */
+#portfolio h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 4rem);
+  letter-spacing: -.04em;
+  line-height: 1.1;
+}
 
-    #portfolio {
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      text-align: center;
-      font-family: system-ui, sans-serif;
-    }
+#portfolio p {
+  color: #aaa;
+  font-size: .76rem;
+  letter-spacing: .17em;
+  line-height: 1.8;
+}
 
-    #portfolio h1 {
-      margin: 0;
-      font-size: clamp(2rem, 6vw, 4rem);
-      letter-spacing: -.04em;
-      line-height: 1.1;
-    }
+.js #portfolio { visibility: hidden; }
 
-    #portfolio p {
-      color: #aaa;
-      font-size: .76rem;
-      letter-spacing: .17em;
-      line-height: 1.8;
-    }
+.js #portfolio.unlocked {
+  visibility: visible;
+  animation: reveal .45s ease both;
+}
 
-    .js #portfolio {
-      visibility: hidden;
-    }
+/* TERMINAL STAGES */
 
-    .js #portfolio.unlocked {
-      visibility: visible;
-      animation: reveal .45s ease both;
-    }
+.terminal-stage { display: none; }
 
-    /* TERMINAL STAGES */
+.js .terminal-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  background: #000;
+  overflow: hidden;
+  transition: opacity .4s ease;
+}
 
-    .terminal-stage {
-      display: none;
-    }
+.js .terminal-stage.exit {
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .js .terminal-stage {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: flex;
-      background: #000;
-      overflow: hidden;
-      transition: opacity .4s ease;
-    }
+.js #login-stage {
+  z-index: 101;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .js .terminal-stage.exit {
-      opacity: 0;
-      pointer-events: none;
-    }
+.js #login-stage.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
 
-    .js #login-stage {
-      z-index: 101;
-      visibility: hidden;
-      opacity: 0;
-      pointer-events: none;
-    }
+.console {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(24px, 4vw, 60px);
+  scrollbar-width: thin;
+  scrollbar-color: #333 #000;
+}
 
-    .js #login-stage.active {
-      visibility: visible;
-      opacity: 1;
-      pointer-events: auto;
-    }
+.console-content {
+  width: 100%;
+  max-width: 1100px;
+}
 
-    .console {
-      flex: 1;
-      min-width: 0;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      padding: clamp(24px, 4vw, 60px);
-      scrollbar-width: thin;
-      scrollbar-color: #333 #000;
-    }
+#output, #login-output, .prompt {
+  font-size: clamp(12px, 1.1vw, 15px);
+  line-height: 1.9;
+  font-variant-numeric: tabular-nums;
+}
 
-    .console-content {
-      width: 100%;
-      max-width: 1100px;
-    }
+#login-output {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 
-    #output,
-    #login-output,
-    .prompt {
-      font-size: clamp(12px, 1.1vw, 15px);
-      line-height: 1.9;
-      font-variant-numeric: tabular-nums;
-    }
+.line, .login-line {
+  min-height: 1.9em;
+}
 
-    #login-output {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
+.bright { color: #fff; }
+.separator { color: #555; }
 
-    .line,
-    .login-line {
-      min-height: 1.9em;
-    }
+.login-prefix,
+.command-prefix { color: #999; }
 
-    .bright {
-      color: #fff;
-    }
+/* ASCII BOOT PROGRESS */
 
-    .separator {
-      color: #555;
-    }
+.boot-task {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  margin: 2px 0;
+}
 
-    .login-prefix,
-    .command-prefix {
-      color: #999;
-    }
+.task-label {
+  color: #ededed;
+  overflow-wrap: anywhere;
+}
 
-    /* STAGE 01 — ASCII PROGRESS */
+.task-progress {
+  color: #aaa;
+  white-space: pre;
+  font-size: .92em;
+  font-variant-numeric: tabular-nums;
+}
 
-    .boot-task {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: baseline;
-      gap: 16px;
-      width: 100%;
-      margin: 2px 0;
-    }
+.task-progress.complete { color: #fff; }
 
-    .task-label {
-      color: #ededed;
-      overflow-wrap: anywhere;
-    }
+/* ENTER PROMPT */
 
-    .task-progress {
-      color: #aaa;
-      white-space: pre;
-      font-size: .92em;
-      font-variant-numeric: tabular-nums;
-    }
+.prompt {
+  display: none;
+  margin-top: 24px;
+}
 
-    .task-progress.complete {
-      color: #fff;
-    }
+.prompt.ready { display: block; }
 
-    /* ENTER PROMPT */
+.command { margin-bottom: 8px; }
 
-    .prompt {
-      display: none;
-      margin-top: 24px;
-    }
+.enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
 
-    .prompt.ready {
-      display: block;
-    }
+.enter:focus-visible {
+  outline: 1px solid white;
+  outline-offset: 5px;
+}
 
-    .command {
-      margin-bottom: 8px;
-    }
+.cursor {
+  display: inline-block;
+  width: .65em;
+  height: 1.05em;
+  background: #fff;
+  vertical-align: -.16em;
+  margin-left: 3px;
+  animation: blink 1s steps(1) infinite;
+}
 
-    .enter {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 5px 0;
-      background: transparent;
-      border: 0;
-      color: #fff;
-      cursor: pointer;
-      text-align: left;
-      font: inherit;
-    }
+@keyframes blink {
+  50% { opacity: 0; }
+}
 
-    .enter:focus-visible {
-      outline: 1px solid #fff;
-      outline-offset: 5px;
-    }
+@keyframes reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-    .cursor {
-      display: inline-block;
-      width: .65em;
-      height: 1.05em;
-      background: #fff;
-      vertical-align: -.16em;
-      margin-left: 3px;
-      animation: blink 1s steps(1) infinite;
-    }
+/* BINARY MATRIX TRANSITION */
 
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
+#matrix-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .4s ease, visibility .4s ease;
+}
 
-    @keyframes reveal {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
+#matrix-stage.active {
+  opacity: 1;
+  visibility: visible;
+}
 
-    /* STAGE 03 — BINARY MATRIX RAIN */
+#matrix-stage.exit {
+  opacity: 0;
+  pointer-events: none;
+}
 
-    #matrix-stage {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: #000;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity .4s ease,
-                  visibility .4s ease;
-    }
+#matrix-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
-    #matrix-stage.active {
-      opacity: 1;
-      visibility: visible;
-    }
+/* MOBILE */
 
-    #matrix-stage.exit {
-      opacity: 0;
-      pointer-events: none;
-    }
+@media (max-width: 650px) {
+  .console { padding: 24px 16px; }
 
-    #matrix-canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: #000;
-    }
+  #output, #login-output, .prompt {
+    font-size: 11px;
+    line-height: 1.75;
+  }
 
-    /* MOBILE */
+  .line, .login-line {
+    min-height: 1.75em;
+  }
 
-    @media (max-width: 650px) {
-      .console {
-        padding: 24px 16px;
-      }
+  .boot-task {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 6px;
+  }
 
-      #output,
-      #login-output,
-      .prompt {
-        font-size: 11px;
-        line-height: 1.75;
-      }
+  .task-progress { padding-left: 2ch; }
+}
 
-      .line,
-      .login-line {
-        min-height: 1.75em;
-      }
-
-      .boot-task {
-        grid-template-columns: 1fr;
-        gap: 0;
-        margin-bottom: 6px;
-      }
-
-      .task-progress {
-        padding-left: 2ch;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- STAGE 01 — SECURE BOOT -->
+<!-- STAGE 01: SECURE BOOT -->
 
-  <section
-    id="boot-stage"
-    class="terminal-stage"
-    aria-label="Secure boot introduction"
-  >
-    <div class="console" id="boot-console">
-      <div class="console-content">
+<section id="boot-stage" class="terminal-stage"
+         aria-label="Secure boot introduction">
+  <div class="console" id="boot-console">
+    <div class="console-content">
+      <div id="output" aria-hidden="true"></div>
 
-        <div id="output" aria-hidden="true"></div>
-
-        <div class="prompt" id="prompt">
-          <div class="command">
-            <span class="command-prefix">system@localhost:~$</span>
-            ./launch
-          </div>
-
-          <button
-            class="enter"
-            id="enter"
-            type="button"
-          >
-            Press ENTER to continue
-            <span class="cursor" aria-hidden="true"></span>
-          </button>
+      <div class="prompt" id="prompt">
+        <div class="command">
+          <span class="command-prefix">system@localhost:~$</span>
+          ./launch
         </div>
-
+        <button id="enter" class="enter" type="button">
+          Press ENTER to continue
+          <span class="cursor" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- STAGE 02 — TERMINAL LOGIN -->
+<!-- STAGE 02: TERMINAL LOGIN -->
 
-  <section
-    id="login-stage"
-    class="terminal-stage"
-    aria-label="Automated terminal login"
-    aria-hidden="true"
-  >
-    <div class="console" id="login-console">
-      <div class="console-content">
-        <div id="login-output" aria-hidden="true"></div>
-      </div>
+<section id="login-stage" class="terminal-stage"
+         aria-label="Automated terminal login"
+         aria-hidden="true">
+  <div class="console" id="login-console">
+    <div class="console-content">
+      <div id="login-output" aria-hidden="true"></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- STAGE 03 — BINARY MATRIX TRANSITION -->
+<!-- STAGE 03: BINARY MATRIX -->
 
-  <section
-    id="matrix-stage"
-    aria-label="Binary transition"
-    aria-hidden="true"
-  >
-    <canvas id="matrix-canvas"></canvas>
-  </section>
+<section id="matrix-stage"
+         aria-label="Binary transition"
+         aria-hidden="true">
+  <canvas id="matrix-canvas"></canvas>
+</section>
 
-  <!-- PORTFOLIO -->
+<!-- PORTFOLIO -->
 
-  <main id="portfolio">
-    <div>
-      <h1>SUGIRVAS SENTHILKUMAR</h1>
-      <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
-    </div>
-  </main>
+<main id="portfolio">
+  <div>
+    <h1>SUGIRVAS SENTHILKUMAR</h1>
+    <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
+  </div>
+</main>
 
-  <script>
-    (() => {
-      "use strict";
+<script>
+(() => {
+  "use strict";
 
-      /* ELEMENTS */
+  const boot = document.getElementById("boot-stage");
+  const bootConsole = document.getElementById("boot-console");
+  const output = document.getElementById("output");
+  const prompt = document.getElementById("prompt");
+  const enter = document.getElementById("enter");
 
-      const boot =
-        document.getElementById("boot-stage");
+  const loginStage = document.getElementById("login-stage");
+  const loginConsole = document.getElementById("login-console");
+  const loginOutput = document.getElementById("login-output");
 
-      const bootConsole =
-        document.getElementById("boot-console");
+  const matrixStage = document.getElementById("matrix-stage");
+  const canvas = document.getElementById("matrix-canvas");
+  const portfolio = document.getElementById("portfolio");
 
-      const output =
-        document.getElementById("output");
+  const reducedMotion = matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-      const prompt =
-        document.getElementById("prompt");
+  const BOOT_DURATION = 5000;
+  const LOGIN_DURATION = 5000;
+  const MATRIX_DURATION = 2500;
+  const BAR_WIDTH = 20;
 
-      const enter =
-        document.getElementById("enter");
+  let bootReady = false;
+  let loginStarted = false;
 
-      const loginStage =
-        document.getElementById("login-stage");
+  const delay = ms =>
+    new Promise(resolve =>
+      setTimeout(resolve, Math.max(0, ms))
+    );
 
-      const loginConsole =
-        document.getElementById("login-console");
+  /* STAGE 01 — UNCHANGED */
 
-      const loginOutput =
-        document.getElementById("login-output");
+  const tasks = [
+    "initializing execution environment",
+    "loading core runtime",
+    "configuring memory subsystem",
+    "mounting virtual filesystem",
+    "resolving module dependencies",
+    "starting system services",
+    "initializing terminal interface",
+    "preparing application runtime"
+  ];
 
-      const matrixStage =
-        document.getElementById("matrix-stage");
+  const weights = [
+    1.12, 0.86, 1.08, 0.92,
+    1.18, 0.84, 1.02, 0.98
+  ];
 
-      const canvas =
-        document.getElementById("matrix-canvas");
+  const totalWeight = weights.reduce(
+    (sum, value) => sum + value, 0
+  );
 
-      const ctx =
-        canvas.getContext("2d", {
-          alpha: false
-        });
+  function scrollBottom(element) {
+    element.scrollTop = element.scrollHeight;
+  }
 
-      const portfolio =
-        document.getElementById("portfolio");
+  function addLine(text, className = "") {
+    const line = document.createElement("div");
+    line.className = "line";
 
-      const reducedMotion = matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
+    if (className) line.classList.add(className);
 
-      /* TIMING */
+    line.textContent = text || "\u00a0";
+    output.appendChild(line);
+    scrollBottom(bootConsole);
+  }
 
-      const BOOT_DURATION = 5000;
-      const LOGIN_DURATION = 5000;
-      const MATRIX_DURATION = 2500;
-      const BAR_WIDTH = 20;
+  function createTask(label) {
+    const row = document.createElement("div");
+    row.className = "boot-task";
 
-      let bootReady = false;
-      let loginStarted = false;
+    const command = document.createElement("span");
+    command.className = "task-label";
+    command.textContent = "> " + label;
 
-      const delay = ms =>
-        new Promise(resolve =>
-          setTimeout(resolve, Math.max(0, ms))
+    const progress = document.createElement("span");
+    progress.className = "task-progress";
+
+    row.append(command, progress);
+    output.appendChild(row);
+
+    scrollBottom(bootConsole);
+    return progress;
+  }
+
+  function updateTask(element, percentage) {
+    const n = Math.max(
+      0, Math.min(100, Math.round(percentage))
+    );
+
+    const filled = Math.round(n / 100 * BAR_WIDTH);
+
+    element.textContent =
+      `[${"#".repeat(filled)}${"-".repeat(BAR_WIDTH - filled)}] ` +
+      `${String(n).padStart(3, "0")}%`;
+
+    if (n === 100) element.classList.add("complete");
+  }
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function easeInOutQuad(t) {
+    return t < .5
+      ? 2 * t * t
+      : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  }
+
+  const easings = [
+    easeOutCubic, easeInOutQuad,
+    easeOutCubic, easeInOutQuad,
+    easeOutCubic, easeInOutQuad,
+    easeOutCubic, easeInOutQuad
+  ];
+
+  async function runBoot() {
+    const start = performance.now();
+
+    addLine("SECURE BOOT", "bright");
+    addLine("────────────────────────────────────────", "separator");
+    addLine("");
+
+    let cumulative = 0;
+
+    for (let i = 0; i < tasks.length; i++) {
+      const bar = createTask(tasks[i]);
+
+      const taskStart =
+        start + BOOT_DURATION * cumulative / totalWeight;
+
+      cumulative += weights[i];
+
+      const taskEnd =
+        start + BOOT_DURATION * cumulative / totalWeight;
+
+      const duration = taskEnd - taskStart;
+      updateTask(bar, 0);
+
+      while (true) {
+        const raw = Math.min(
+          1,
+          Math.max(0, (performance.now() - taskStart) / duration)
         );
 
-      /* STAGE 01 — LOCKED SECURE BOOT */
+        const eased = easings[i](raw);
 
-      // Simulated startup, not real firmware verification.
+        updateTask(
+          bar,
+          raw >= 1 ? 100 : Math.min(99, eased * 100)
+        );
 
-      const tasks = [
-        "initializing execution environment",
-        "loading core runtime",
-        "configuring memory subsystem",
-        "mounting virtual filesystem",
-        "resolving module dependencies",
-        "starting system services",
-        "initializing terminal interface",
-        "preparing application runtime"
-      ];
+        if (raw >= 1) break;
+        await delay(32);
+      }
 
-      const taskWeights = [
-        1.12, 0.86, 1.08, 0.92,
-        1.18, 0.84, 1.02, 0.98
-      ];
+      updateTask(bar, 100);
+    }
 
-      const totalWeight = taskWeights.reduce(
-        (sum, weight) => sum + weight,
-        0
+    addLine("");
+    addLine("[ OK ] SYSTEM READY", "bright");
+
+    const remaining =
+      start + BOOT_DURATION - performance.now();
+
+    if (remaining > 0) await delay(remaining);
+
+    bootReady = true;
+    prompt.classList.add("ready");
+    scrollBottom(bootConsole);
+    enter.focus({ preventScroll: true });
+  }
+
+  /* STAGE 02 — UNCHANGED */
+
+  function createTerminalLine(prefix = "") {
+    const line = document.createElement("div");
+    line.className = "login-line";
+
+    const label = document.createElement("span");
+    label.className = "login-prefix";
+    label.textContent = prefix;
+
+    const value = document.createElement("span");
+
+    line.append(label, value);
+    loginOutput.appendChild(line);
+    scrollBottom(loginConsole);
+
+    return value;
+  }
+
+  function attachCursor(element) {
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    cursor.setAttribute("aria-hidden", "true");
+    element.after(cursor);
+    return cursor;
+  }
+
+  async function waitUntil(target) {
+    const remaining = target - performance.now();
+    if (remaining > 0) await delay(remaining);
+  }
+
+  async function typeWithin(element, text, start, duration) {
+    const cursor = attachCursor(element);
+    const chars = Array.from(text);
+
+    for (let i = 0; i < chars.length; i++) {
+      await waitUntil(start + (i + 1) / chars.length * duration);
+      element.textContent += chars[i];
+      scrollBottom(loginConsole);
+    }
+
+    cursor.remove();
+  }
+
+  async function runLogin() {
+    const start = performance.now();
+
+    loginStage.setAttribute("aria-hidden", "false");
+    loginStage.classList.add("active");
+
+    boot.remove();
+
+    await waitUntil(start + 150);
+
+    await typeWithin(
+      createTerminalLine("localhost login: "),
+      "sugirvassenthilkumar",
+      start + 150, 1650
+    );
+
+    await waitUntil(start + 2000);
+
+    const password = createTerminalLine("Password: ");
+    const passwordCursor = attachCursor(password);
+
+    await waitUntil(start + 2650);
+    passwordCursor.remove();
+
+    await waitUntil(start + 2750);
+    createTerminalLine("");
+    createTerminalLine("Login successful!");
+
+    await waitUntil(start + 2900);
+    createTerminalLine("Welcome, sugirvassenthilkumar!");
+
+    await waitUntil(start + 3400);
+    createTerminalLine("");
+
+    await typeWithin(
+      createTerminalLine(
+        "sugirvassenthilkumar@localhost:~$ "
+      ),
+      "whoami",
+      start + 3400, 1300
+    );
+
+    await waitUntil(start + LOGIN_DURATION);
+
+    await runMatrix();
+  }
+
+  /* STAGE 03 — RELIABLE MATRIX TRANSITION */
+
+  async function runMatrix() {
+    matrixStage.classList.add("active");
+    matrixStage.setAttribute("aria-hidden", "false");
+
+    loginStage.remove();
+
+    let frameId = null;
+    let finished = false;
+    let columns = [];
+    let width = 0;
+    let height = 0;
+    let lastFrame = 0;
+    const cell = 20;
+
+    const ctx = canvas.getContext("2d", {
+      alpha: false
+    });
+
+    function resize() {
+      if (!ctx) return;
+
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      const dpr = Math.min(
+        window.devicePixelRatio || 1, 2
       );
 
-      function scrollBottom(element) {
-        element.scrollTop =
-          element.scrollHeight;
-      }
-
-      function addLine(text, className = "") {
-        const line =
-          document.createElement("div");
-
-        line.className = "line";
-
-        if (className) {
-          line.classList.add(className);
-        }
-
-        line.textContent =
-          text || "\u00a0";
-
-        output.appendChild(line);
-        scrollBottom(bootConsole);
-      }
-
-      function createTask(label) {
-        const row =
-          document.createElement("div");
-
-        row.className = "boot-task";
-
-        const command =
-          document.createElement("span");
-
-        command.className = "task-label";
-        command.textContent = "> " + label;
-
-        const progress =
-          document.createElement("span");
-
-        progress.className = "task-progress";
-
-        row.append(command, progress);
-        output.appendChild(row);
-
-        scrollBottom(bootConsole);
-
-        return progress;
-      }
-
-      function updateTask(progress, percentage) {
-        const n = Math.max(
-          0,
-          Math.min(100, Math.round(percentage))
-        );
-
-        const filled =
-          Math.round(n / 100 * BAR_WIDTH);
-
-        const bar =
-          "#".repeat(filled) +
-          "-".repeat(BAR_WIDTH - filled);
-
-        progress.textContent =
-          `[${bar}] ${String(n).padStart(3, "0")}%`;
-
-        if (n === 100) {
-          progress.classList.add("complete");
-        }
-      }
-
-      function easeOutCubic(t) {
-        return 1 - Math.pow(1 - t, 3);
-      }
-
-      function easeInOutQuad(t) {
-        return t < 0.5
-          ? 2 * t * t
-          : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      }
-
-      const easingFunctions = [
-        easeOutCubic,
-        easeInOutQuad,
-        easeOutCubic,
-        easeInOutQuad,
-        easeOutCubic,
-        easeInOutQuad,
-        easeOutCubic,
-        easeInOutQuad
-      ];
-
-      async function runBoot() {
-        const bootStart = performance.now();
-
-        addLine("SECURE BOOT", "bright");
-        addLine(
-          "────────────────────────────────────────",
-          "separator"
-        );
-        addLine("");
-
-        let cumulativeWeight = 0;
-
-        for (let i = 0; i < tasks.length; i++) {
-          const bar = createTask(tasks[i]);
-
-          const taskStart =
-            bootStart +
-            BOOT_DURATION *
-            (cumulativeWeight / totalWeight);
-
-          cumulativeWeight += taskWeights[i];
-
-          const taskEnd =
-            bootStart +
-            BOOT_DURATION *
-            (cumulativeWeight / totalWeight);
-
-          const taskDuration =
-            taskEnd - taskStart;
-
-          const easing =
-            easingFunctions[i];
-
-          updateTask(bar, 0);
-
-          while (true) {
-            const now = performance.now();
-
-            const rawProgress = Math.min(
-              1,
-              Math.max(
-                0,
-                (now - taskStart) / taskDuration
-              )
-            );
-
-            const easedProgress =
-              easing(rawProgress);
-
-            updateTask(
-              bar,
-              rawProgress >= 1
-                ? 100
-                : Math.min(
-                    99,
-                    easedProgress * 100
-                  )
-            );
-
-            if (rawProgress >= 1) {
-              break;
-            }
-
-            await delay(32);
-          }
-
-          updateTask(bar, 100);
-        }
-
-        addLine("");
-        addLine(
-          "[ OK ] SYSTEM READY",
-          "bright"
-        );
-
-        const remaining =
-          bootStart +
-          BOOT_DURATION -
-          performance.now();
-
-        if (remaining > 0) {
-          await delay(remaining);
-        }
-
-        bootReady = true;
-        prompt.classList.add("ready");
-
-        scrollBottom(bootConsole);
-        enter.focus({ preventScroll: true });
-      }
-
-      /* STAGE 02 — LOCKED TERMINAL LOGIN */
-
-      function createTerminalLine(prefix = "") {
-        const line =
-          document.createElement("div");
-
-        line.className = "login-line";
-
-        const label =
-          document.createElement("span");
-
-        label.className = "login-prefix";
-        label.textContent = prefix;
-
-        const value =
-          document.createElement("span");
-
-        line.append(label, value);
-        loginOutput.appendChild(line);
-
-        scrollBottom(loginConsole);
-
-        return value;
-      }
-
-      function attachCursor(element) {
-        const cursor =
-          document.createElement("span");
-
-        cursor.className = "cursor";
-
-        cursor.setAttribute(
-          "aria-hidden",
-          "true"
-        );
-
-        element.after(cursor);
-
-        return cursor;
-      }
-
-      async function typeWithin(
-        element,
-        text,
-        startTime,
-        duration
-      ) {
-        const cursor =
-          attachCursor(element);
-
-        const characters =
-          Array.from(text);
-
-        for (
-          let i = 0;
-          i < characters.length;
-          i++
-        ) {
-          const target =
-            startTime +
-            ((i + 1) / characters.length) *
-            duration;
-
-          const wait =
-            target - performance.now();
-
-          if (wait > 0) {
-            await delay(wait);
-          }
-
-          element.textContent +=
-            characters[i];
-
-          scrollBottom(loginConsole);
-        }
-
-        cursor.remove();
-      }
-
-      async function waitUntil(targetTime) {
-        const remaining =
-          targetTime - performance.now();
-
-        if (remaining > 0) {
-          await delay(remaining);
-        }
-      }
-
-      async function runLogin() {
-        const start = performance.now();
-
-        loginStage.setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-        loginStage.classList.add("active");
-
-        boot.remove();
-
-        // Username: 0.15–1.80 seconds
-
-        await waitUntil(start + 150);
-
-        await typeWithin(
-          createTerminalLine("localhost login: "),
-          "sugirvassenthilkumar",
-          start + 150,
-          1650
-        );
-
-        // Silent password: 2.00–2.65 seconds
-
-        await waitUntil(start + 2000);
-
-        const passwordLine =
-          createTerminalLine("Password: ");
-
-        const passwordCursor =
-          attachCursor(passwordLine);
-
-        await waitUntil(start + 2650);
-        passwordCursor.remove();
-
-        // Welcome messages
-
-        await waitUntil(start + 2750);
-        createTerminalLine("");
-        createTerminalLine("Login successful!");
-
-        await waitUntil(start + 2900);
-        createTerminalLine(
-          "Welcome, sugirvassenthilkumar!"
-        );
-
-        // whoami: 3.40–4.70 seconds
-
-        await waitUntil(start + 3400);
-        createTerminalLine("");
-
-        await typeWithin(
-          createTerminalLine(
-            "sugirvassenthilkumar@localhost:~$ "
-          ),
-          "whoami",
-          start + 3400,
-          1300
-        );
-
-        await waitUntil(start + LOGIN_DURATION);
-
-        // Stage 03 replaces the direct homepage reveal.
-        await runMatrix();
-      }
-
-      /* STAGE 03 — BINARY MATRIX RAIN */
-
-      function random(min, max) {
-        return min + Math.random() * (max - min);
-      }
-
-      async function runMatrix() {
-        const start = performance.now();
-
-        matrixStage.classList.add("active");
-        matrixStage.setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-        loginStage.remove();
-
-        // Respect reduced-motion settings with a
-        // static binary scene, not falling columns.
-        if (reducedMotion || !ctx) {
-          drawStaticMatrix();
-          await delay(MATRIX_DURATION);
-          finishMatrix();
-          return;
-        }
-
-        const dpr = Math.min(
-          window.devicePixelRatio || 1,
-          2
-        );
-
-        let width = 0;
-        let height = 0;
-        let columns = [];
-        let lastFrame = 0;
-        let animationId = 0;
-
-        const fontSize = 16;
-        const cellSize = 20;
-        const frameInterval = 45;
-
-        function resizeCanvas() {
-          width = window.innerWidth;
-          height = window.innerHeight;
-
-          canvas.width = Math.round(width * dpr);
-          canvas.height = Math.round(height * dpr);
-
-          ctx.setTransform(
-            dpr, 0, 0, dpr, 0, 0
-          );
-
-          ctx.fillStyle = "#000";
-          ctx.fillRect(0, 0, width, height);
-
-          const count = Math.ceil(width / cellSize);
-
-          columns = Array.from(
-            { length: count },
-            (_, i) => ({
-              x: i * cellSize,
-              y: random(-height, 0),
-              speed: random(12, 28)
-            })
-          );
-        }
-
-        function draw(time) {
-          if (
-            time - start >= MATRIX_DURATION - 350
-          ) {
-            cancelAnimationFrame(animationId);
-            finishMatrix();
-            return;
-          }
-
-          animationId = requestAnimationFrame(draw);
-
-          if (time - lastFrame < frameInterval) {
-            return;
-          }
-
-          lastFrame = time;
-
-          ctx.fillStyle = "rgba(0,0,0,0.12)";
-          ctx.fillRect(0, 0, width, height);
-
-          ctx.font =
-            `${fontSize}px ${getComputedStyle(document.body).fontFamily}`;
-
-          ctx.textBaseline = "top";
-
-          for (const column of columns) {
-            const character =
-              Math.random() > 0.5 ? "1" : "0";
-
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, width, height);
+
+      columns = Array.from(
+        { length: Math.ceil(width / cell) },
+        (_, i) => ({
+          x: i * cell,
+          y: -Math.random() * height,
+          speed: 7 + Math.random() * 12
+        })
+      );
+    }
+
+    function drawStatic() {
+      if (!ctx) return;
+
+      ctx.font = "14px monospace";
+      ctx.textBaseline = "top";
+
+      for (let x = 0; x < width; x += cell) {
+        for (let y = 0; y < height; y += 22) {
+          if (Math.random() > .62) {
             ctx.fillStyle =
-              Math.random() > 0.88
-                ? "#FFFFFF"
-                : "#858585";
+              Math.random() > .9 ? "#fff" : "#777";
 
             ctx.fillText(
-              character,
-              column.x,
-              column.y
+              Math.random() > .5 ? "1" : "0",
+              x, y
             );
-
-            column.y += column.speed;
-
-            if (column.y > height + 100) {
-              column.y = random(-300, -20);
-              column.speed = random(12, 28);
-            }
-          }
-        }
-
-        resizeCanvas();
-        window.addEventListener(
-          "resize",
-          resizeCanvas,
-          { passive: true }
-        );
-
-        function finishMatrix() {
-          cancelAnimationFrame(animationId);
-          window.removeEventListener(
-            "resize",
-            resizeCanvas
-          );
-
-          revealPortfolio();
-        }
-
-        animationId = requestAnimationFrame(draw);
-      }
-
-      function drawStaticMatrix() {
-        if (!ctx) return;
-
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        const dpr = Math.min(
-          window.devicePixelRatio || 1,
-          2
-        );
-
-        canvas.width = Math.round(width * dpr);
-        canvas.height = Math.round(height * dpr);
-
-        ctx.setTransform(
-          dpr, 0, 0, dpr, 0, 0
-        );
-
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.font = "14px monospace";
-        ctx.textBaseline = "top";
-
-        for (let x = 0; x < width; x += 20) {
-          for (let y = 0; y < height; y += 22) {
-            if (Math.random() > 0.62) {
-              ctx.fillStyle =
-                Math.random() > 0.9
-                  ? "#fff"
-                  : "#777";
-
-              ctx.fillText(
-                Math.random() > 0.5 ? "1" : "0",
-                x,
-                y
-              );
-            }
           }
         }
       }
+    }
 
-      async function revealPortfolio() {
-        portfolio.classList.add("unlocked");
-        matrixStage.classList.add("exit");
+    function draw(time) {
+      if (finished || !ctx) return;
 
-        await delay(reducedMotion ? 0 : 400);
+      frameId = requestAnimationFrame(draw);
 
+      if (time - lastFrame < 45) return;
+      lastFrame = time;
+
+      ctx.fillStyle = "rgba(0,0,0,0.12)";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.font = "16px monospace";
+      ctx.textBaseline = "top";
+
+      for (const column of columns) {
+        ctx.fillStyle =
+          Math.random() > .88 ? "#fff" : "#888";
+
+        ctx.fillText(
+          Math.random() > .5 ? "1" : "0",
+          column.x,
+          column.y
+        );
+
+        column.y += column.speed;
+
+        if (column.y > height + 40) {
+          column.y = -Math.random() * 200;
+          column.speed = 7 + Math.random() * 12;
+        }
+      }
+    }
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+      }
+
+      window.removeEventListener("resize", resize);
+
+      portfolio.classList.add("unlocked");
+      matrixStage.classList.add("exit");
+
+      window.setTimeout(() => {
         matrixStage.remove();
+        portfolio.setAttribute("tabindex", "-1");
+        portfolio.focus({ preventScroll: true });
+      }, reducedMotion ? 0 : 450);
+    }
 
-        portfolio.setAttribute(
-          "tabindex",
-          "-1"
-        );
+    resize();
 
-        portfolio.focus({
-          preventScroll: true
-        });
-      }
-
-      /* INTERACTION */
-
-      function enterConsole() {
-        if (!bootReady || loginStarted) {
-          return;
-        }
-
-        loginStarted = true;
-        runLogin();
-      }
-
-      enter.addEventListener(
-        "click",
-        enterConsole
+    if (reducedMotion) {
+      drawStatic();
+    } else {
+      window.addEventListener(
+        "resize", resize, { passive: true }
       );
+      frameId = requestAnimationFrame(draw);
+    }
 
-      document.addEventListener(
-        "keydown",
-        event => {
-          if (
-            event.key === "Enter" &&
-            bootReady &&
-            !loginStarted
-          ) {
-            event.preventDefault();
-            enterConsole();
-          }
-        }
-      );
+    // Independent completion timer:
+    // Works even if animation frames are paused or
+    // Reduce Motion is enabled.
+    window.setTimeout(finish, MATRIX_DURATION);
+  }
 
-      runBoot();
+  /* INTERACTION */
 
-    })();
-  </script>
+  function enterConsole() {
+    if (!bootReady || loginStarted) return;
 
+    loginStarted = true;
+    runLogin();
+  }
+
+  enter.addEventListener("click", enterConsole);
+
+  document.addEventListener("keydown", event => {
+    if (
+      event.key === "Enter" &&
+      bootReady &&
+      !loginStarted
+    ) {
+      event.preventDefault();
+      enterConsole();
+    }
+  });
+
+  runBoot();
+})();
+</script>
 </body>
 </html>
