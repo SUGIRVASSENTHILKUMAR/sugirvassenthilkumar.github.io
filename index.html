@@ -17,7 +17,6 @@
     :root {
       color-scheme: dark;
       --fg: #f2f2f2;
-      --muted: #919191;
       --mono: "SFMono-Regular", Menlo, Monaco,
               Consolas, "Liberation Mono", monospace;
     }
@@ -153,7 +152,7 @@
       color: #999;
     }
 
-    /* STAGE 01 — INLINE ASCII PROGRESS */
+    /* STAGE 01 — ASCII PROGRESS */
 
     .boot-task {
       display: grid;
@@ -238,6 +237,37 @@
       }
     }
 
+    /* STAGE 03 — BINARY MATRIX RAIN */
+
+    #matrix-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: #000;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .4s ease,
+                  visibility .4s ease;
+    }
+
+    #matrix-stage.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #matrix-stage.exit {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #matrix-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #000;
+    }
+
     /* MOBILE */
 
     @media (max-width: 650px) {
@@ -305,10 +335,7 @@
             type="button"
           >
             Press ENTER to continue
-            <span
-              class="cursor"
-              aria-hidden="true"
-            ></span>
+            <span class="cursor" aria-hidden="true"></span>
           </button>
         </div>
 
@@ -326,12 +353,19 @@
   >
     <div class="console" id="login-console">
       <div class="console-content">
-        <div
-          id="login-output"
-          aria-hidden="true"
-        ></div>
+        <div id="login-output" aria-hidden="true"></div>
       </div>
     </div>
+  </section>
+
+  <!-- STAGE 03 — BINARY MATRIX TRANSITION -->
+
+  <section
+    id="matrix-stage"
+    aria-label="Binary transition"
+    aria-hidden="true"
+  >
+    <canvas id="matrix-canvas"></canvas>
   </section>
 
   <!-- PORTFOLIO -->
@@ -373,6 +407,17 @@
       const loginOutput =
         document.getElementById("login-output");
 
+      const matrixStage =
+        document.getElementById("matrix-stage");
+
+      const canvas =
+        document.getElementById("matrix-canvas");
+
+      const ctx =
+        canvas.getContext("2d", {
+          alpha: false
+        });
+
       const portfolio =
         document.getElementById("portfolio");
 
@@ -384,6 +429,7 @@
 
       const BOOT_DURATION = 5000;
       const LOGIN_DURATION = 5000;
+      const MATRIX_DURATION = 2500;
       const BAR_WIDTH = 20;
 
       let bootReady = false;
@@ -394,10 +440,9 @@
           setTimeout(resolve, Math.max(0, ms))
         );
 
-      /* STAGE 01 — BOOT TASKS */
+      /* STAGE 01 — LOCKED SECURE BOOT */
 
-      // Simulated startup only.
-      // No actual firmware verification occurs.
+      // Simulated startup, not real firmware verification.
 
       const tasks = [
         "initializing execution environment",
@@ -411,14 +456,8 @@
       ];
 
       const taskWeights = [
-        1.12,
-        0.86,
-        1.08,
-        0.92,
-        1.18,
-        0.84,
-        1.02,
-        0.98
+        1.12, 0.86, 1.08, 0.92,
+        1.18, 0.84, 1.02, 0.98
       ];
 
       const totalWeight = taskWeights.reduce(
@@ -606,7 +645,7 @@
         enter.focus({ preventScroll: true });
       }
 
-      /* STAGE 02 — TERMINAL HELPERS */
+      /* STAGE 02 — LOCKED TERMINAL LOGIN */
 
       function createTerminalLine(prefix = "") {
         const line =
@@ -694,8 +733,6 @@
         }
       }
 
-      /* STAGE 02 — FIVE-SECOND LOGIN */
-
       async function runLogin() {
         const start = performance.now();
 
@@ -708,11 +745,9 @@
 
         boot.remove();
 
-        // 0.00–0.15s: fresh terminal
+        // Username: 0.15–1.80 seconds
 
         await waitUntil(start + 150);
-
-        // 0.15–1.80s: username
 
         await typeWithin(
           createTerminalLine("localhost login: "),
@@ -721,12 +756,9 @@
           1650
         );
 
-        // 1.80–2.00s: pause
+        // Silent password: 2.00–2.65 seconds
 
         await waitUntil(start + 2000);
-
-        // 2.00–2.65s: silent simulated password
-        // No password is generated, stored, or transmitted.
 
         const passwordLine =
           createTerminalLine("Password: ");
@@ -735,32 +767,23 @@
           attachCursor(passwordLine);
 
         await waitUntil(start + 2650);
-
         passwordCursor.remove();
 
-        // 2.65–2.90s: login confirmation
+        // Welcome messages
 
         await waitUntil(start + 2750);
-
         createTerminalLine("");
-
-        createTerminalLine(
-          "Login successful!"
-        );
+        createTerminalLine("Login successful!");
 
         await waitUntil(start + 2900);
-
         createTerminalLine(
           "Welcome, sugirvassenthilkumar!"
         );
 
-        // 2.90–3.40s: brief welcome display
+        // whoami: 3.40–4.70 seconds
 
         await waitUntil(start + 3400);
-
         createTerminalLine("");
-
-        // 3.40–4.70s: whoami typing
 
         await typeWithin(
           createTerminalLine(
@@ -771,18 +794,196 @@
           1300
         );
 
-        // 4.70–5.00s: final pause
-
         await waitUntil(start + LOGIN_DURATION);
 
-        // Automatically reveal the portfolio.
+        // Stage 03 replaces the direct homepage reveal.
+        await runMatrix();
+      }
 
-        portfolio.classList.add("unlocked");
-        loginStage.classList.add("exit");
+      /* STAGE 03 — BINARY MATRIX RAIN */
 
-        await delay(reducedMotion ? 0 : 450);
+      function random(min, max) {
+        return min + Math.random() * (max - min);
+      }
+
+      async function runMatrix() {
+        const start = performance.now();
+
+        matrixStage.classList.add("active");
+        matrixStage.setAttribute(
+          "aria-hidden",
+          "false"
+        );
 
         loginStage.remove();
+
+        // Respect reduced-motion settings with a
+        // static binary scene, not falling columns.
+        if (reducedMotion || !ctx) {
+          drawStaticMatrix();
+          await delay(MATRIX_DURATION);
+          finishMatrix();
+          return;
+        }
+
+        const dpr = Math.min(
+          window.devicePixelRatio || 1,
+          2
+        );
+
+        let width = 0;
+        let height = 0;
+        let columns = [];
+        let lastFrame = 0;
+        let animationId = 0;
+
+        const fontSize = 16;
+        const cellSize = 20;
+        const frameInterval = 45;
+
+        function resizeCanvas() {
+          width = window.innerWidth;
+          height = window.innerHeight;
+
+          canvas.width = Math.round(width * dpr);
+          canvas.height = Math.round(height * dpr);
+
+          ctx.setTransform(
+            dpr, 0, 0, dpr, 0, 0
+          );
+
+          ctx.fillStyle = "#000";
+          ctx.fillRect(0, 0, width, height);
+
+          const count = Math.ceil(width / cellSize);
+
+          columns = Array.from(
+            { length: count },
+            (_, i) => ({
+              x: i * cellSize,
+              y: random(-height, 0),
+              speed: random(12, 28)
+            })
+          );
+        }
+
+        function draw(time) {
+          if (
+            time - start >= MATRIX_DURATION - 350
+          ) {
+            cancelAnimationFrame(animationId);
+            finishMatrix();
+            return;
+          }
+
+          animationId = requestAnimationFrame(draw);
+
+          if (time - lastFrame < frameInterval) {
+            return;
+          }
+
+          lastFrame = time;
+
+          ctx.fillStyle = "rgba(0,0,0,0.12)";
+          ctx.fillRect(0, 0, width, height);
+
+          ctx.font =
+            `${fontSize}px ${getComputedStyle(document.body).fontFamily}`;
+
+          ctx.textBaseline = "top";
+
+          for (const column of columns) {
+            const character =
+              Math.random() > 0.5 ? "1" : "0";
+
+            ctx.fillStyle =
+              Math.random() > 0.88
+                ? "#FFFFFF"
+                : "#858585";
+
+            ctx.fillText(
+              character,
+              column.x,
+              column.y
+            );
+
+            column.y += column.speed;
+
+            if (column.y > height + 100) {
+              column.y = random(-300, -20);
+              column.speed = random(12, 28);
+            }
+          }
+        }
+
+        resizeCanvas();
+        window.addEventListener(
+          "resize",
+          resizeCanvas,
+          { passive: true }
+        );
+
+        function finishMatrix() {
+          cancelAnimationFrame(animationId);
+          window.removeEventListener(
+            "resize",
+            resizeCanvas
+          );
+
+          revealPortfolio();
+        }
+
+        animationId = requestAnimationFrame(draw);
+      }
+
+      function drawStaticMatrix() {
+        if (!ctx) return;
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const dpr = Math.min(
+          window.devicePixelRatio || 1,
+          2
+        );
+
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+
+        ctx.setTransform(
+          dpr, 0, 0, dpr, 0, 0
+        );
+
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.font = "14px monospace";
+        ctx.textBaseline = "top";
+
+        for (let x = 0; x < width; x += 20) {
+          for (let y = 0; y < height; y += 22) {
+            if (Math.random() > 0.62) {
+              ctx.fillStyle =
+                Math.random() > 0.9
+                  ? "#fff"
+                  : "#777";
+
+              ctx.fillText(
+                Math.random() > 0.5 ? "1" : "0",
+                x,
+                y
+              );
+            }
+          }
+        }
+      }
+
+      async function revealPortfolio() {
+        portfolio.classList.add("unlocked");
+        matrixStage.classList.add("exit");
+
+        await delay(reducedMotion ? 0 : 400);
+
+        matrixStage.remove();
 
         portfolio.setAttribute(
           "tabindex",
@@ -828,5 +1029,6 @@
 
     })();
   </script>
+
 </body>
 </html>
