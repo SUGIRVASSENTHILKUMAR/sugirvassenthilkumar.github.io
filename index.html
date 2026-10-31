@@ -44,6 +44,13 @@
       padding: 24px;
       text-align: center;
       font-family: system-ui, sans-serif;
+      background: #000;
+      border: none;
+    }
+
+    /* Remove the unwanted homepage focus outline */
+    #portfolio:focus {
+      outline: none;
     }
 
     #portfolio h1 {
@@ -646,8 +653,15 @@
         await delay(reducedMotion ? 0 : 450);
 
         loginStage.remove();
+
+        // Move focus for accessibility without
+        // displaying a border around the homepage.
         portfolio.setAttribute("tabindex", "-1");
-        portfolio.focus({ preventScroll: true });
+
+        portfolio.focus({
+          preventScroll: true,
+          focusVisible: false
+        });
       }
 
       /* INTERACTION */
