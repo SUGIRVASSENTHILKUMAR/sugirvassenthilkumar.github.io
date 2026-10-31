@@ -35,22 +35,34 @@
       font-family: var(--mono);
     }
 
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
     /* PORTFOLIO */
 
     #portfolio {
       min-height: 100svh;
       display: grid;
       place-items: center;
-      padding: 24px;
+      padding: 80px 24px;
       text-align: center;
       font-family: system-ui, sans-serif;
       background: #000;
       border: none;
     }
 
-    /* Remove the unwanted homepage focus outline */
     #portfolio:focus {
       outline: none;
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+    }
+
+    .page.active {
+      display: block;
     }
 
     #portfolio h1 {
@@ -60,11 +72,18 @@
       line-height: 1.1;
     }
 
-    #portfolio p {
-      color: #aaa;
-      font-size: .76rem;
-      letter-spacing: .17em;
-      line-height: 1.8;
+    .section-title {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: -.035em;
+      font-weight: 700;
+    }
+
+    .section-placeholder {
+      margin: 18px 0 0;
+      color: #777;
+      font-size: .85rem;
+      letter-spacing: .02em;
     }
 
     .js #portfolio {
@@ -74,6 +93,81 @@
     .js #portfolio.unlocked {
       visibility: visible;
       animation: reveal .45s ease both;
+    }
+
+    /* LEFT NAVIGATION */
+
+    .site-nav {
+      position: fixed;
+      top: 50%;
+      left: clamp(24px, 4vw, 60px);
+      transform: translateY(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 17px;
+      font-family: var(--mono);
+    }
+
+    .site-nav a {
+      display: inline-block;
+      color: #777;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: .045em;
+      white-space: nowrap;
+      transition: color .2s ease;
+    }
+
+    .site-nav a:hover,
+    .site-nav a:focus-visible,
+    .site-nav a[aria-current="page"] {
+      color: #fff;
+    }
+
+    .site-nav a:focus-visible {
+      outline: 1px solid #fff;
+      outline-offset: 5px;
+    }
+
+    .js .site-nav {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .js body.site-ready .site-nav {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity .35s ease;
+    }
+
+    /* MOBILE MENU */
+
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 23px;
+      left: 20px;
+      z-index: 40;
+      padding: 10px 12px;
+      background: #000;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 0;
+      font: 12px var(--mono);
+      cursor: pointer;
+    }
+
+    .menu-toggle:focus-visible {
+      outline: 1px solid #fff;
+      outline-offset: 4px;
+    }
+
+    .js .menu-toggle {
+      visibility: hidden;
     }
 
     /* TERMINAL STAGES */
@@ -143,15 +237,20 @@
       min-height: 1.9em;
     }
 
-    .bright { color: #fff; }
-    .separator { color: #555; }
+    .bright {
+      color: #fff;
+    }
+
+    .separator {
+      color: #555;
+    }
 
     .login-prefix,
     .command-prefix {
       color: #999;
     }
 
-    /* INLINE ASCII PROGRESS */
+    /* BOOT PROGRESS */
 
     .boot-task {
       display: grid;
@@ -222,15 +321,70 @@
     }
 
     @keyframes blink {
-      50% { opacity: 0; }
+      50% {
+        opacity: 0;
+      }
     }
 
     @keyframes reveal {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
     /* MOBILE */
+
+    @media (max-width: 800px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .js body.site-ready .menu-toggle {
+        visibility: visible;
+      }
+
+      .site-nav {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(280px, 85vw);
+        padding: 90px 28px 30px;
+        transform: translateX(-100%);
+        align-items: flex-start;
+        justify-content: center;
+        gap: 19px;
+        background: #000;
+        border-right: 1px solid #222;
+        overflow-y: auto;
+        transition: transform .25s ease;
+      }
+
+      .site-nav a {
+        font-size: 13px;
+      }
+
+      .js body.site-ready .site-nav {
+        opacity: 1;
+        visibility: hidden;
+        transform: translateX(-100%);
+      }
+
+      .js body.site-ready.menu-open .site-nav {
+        visibility: visible;
+        transform: translateX(0);
+      }
+
+      #portfolio {
+        padding: 90px 22px;
+      }
+
+      #portfolio h1 {
+        font-size: clamp(1.9rem, 7vw, 3.5rem);
+      }
+    }
 
     @media (max-width: 650px) {
       .console {
@@ -314,13 +468,85 @@
     </div>
   </section>
 
+  <!-- LEFT NAVIGATION -->
+
+  <button
+    class="menu-toggle"
+    id="menu-toggle"
+    type="button"
+    aria-label="Open navigation"
+    aria-expanded="false"
+    aria-controls="site-nav"
+  >
+    &gt; MENU
+  </button>
+
+  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+    <a href="#home" data-page="home">&gt; HOME</a>
+    <a href="#about" data-page="about">&gt; ABOUT</a>
+    <a href="#projects" data-page="projects">&gt; PROJECTS</a>
+    <a href="#skills" data-page="skills">&gt; SKILLS</a>
+    <a href="#tools" data-page="tools">&gt; TOOLS</a>
+    <a href="#labs" data-page="labs">&gt; LABS</a>
+    <a href="#research" data-page="research">&gt; RESEARCH</a>
+    <a href="#blog" data-page="blog">&gt; BLOG</a>
+    <a href="#achievements" data-page="achievements">&gt; ACHIEVEMENTS</a>
+    <a href="#contact" data-page="contact">&gt; CONTACT</a>
+  </nav>
+
   <!-- PORTFOLIO -->
 
   <main id="portfolio">
-    <div>
+
+    <section class="page active" id="home">
       <h1>SUGIRVAS SENTHILKUMAR</h1>
-      <p>SOFTWARE DEVELOPMENT / CYBERSECURITY</p>
-    </div>
+    </section>
+
+    <section class="page" id="about" hidden>
+      <h2 class="section-title">ABOUT</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="projects" hidden>
+      <h2 class="section-title">PROJECTS</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="skills" hidden>
+      <h2 class="section-title">SKILLS</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="tools" hidden>
+      <h2 class="section-title">TOOLS</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="labs" hidden>
+      <h2 class="section-title">LABS</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="research" hidden>
+      <h2 class="section-title">RESEARCH</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="blog" hidden>
+      <h2 class="section-title">BLOG</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="achievements" hidden>
+      <h2 class="section-title">ACHIEVEMENTS</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
+    <section class="page" id="contact" hidden>
+      <h2 class="section-title">CONTACT</h2>
+      <p class="section-placeholder">Coming soon.</p>
+    </section>
+
   </main>
 
   <script>
@@ -338,6 +564,15 @@
       const loginOutput = document.getElementById("login-output");
       const portfolio = document.getElementById("portfolio");
 
+      const menuToggle = document.getElementById("menu-toggle");
+      const nav = document.getElementById("site-nav");
+      const navLinks = Array.from(
+        nav.querySelectorAll("[data-page]")
+      );
+      const pages = Array.from(
+        portfolio.querySelectorAll(".page")
+      );
+
       const reducedMotion = matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
@@ -354,10 +589,92 @@
           setTimeout(resolve, Math.max(0, ms))
         );
 
-      /* STAGE 01 — APPROVED SECURE BOOT */
+      /* NAVIGATION */
 
-      // Visual simulation only.
-      // No real firmware verification occurs.
+      function closeMenu() {
+        document.body.classList.remove("menu-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute(
+          "aria-label",
+          "Open navigation"
+        );
+        menuToggle.textContent = "> MENU";
+      }
+
+      function openMenu() {
+        document.body.classList.add("menu-open");
+        menuToggle.setAttribute("aria-expanded", "true");
+        menuToggle.setAttribute(
+          "aria-label",
+          "Close navigation"
+        );
+        menuToggle.textContent = "× CLOSE";
+      }
+
+      function showPage() {
+        const requested = location.hash
+          .slice(1)
+          .toLowerCase();
+
+        const validPage = pages.find(
+          page => page.id === requested
+        );
+
+        const activeId = validPage
+          ? validPage.id
+          : "home";
+
+        pages.forEach(page => {
+          const active = page.id === activeId;
+          page.hidden = !active;
+          page.classList.toggle("active", active);
+        });
+
+        navLinks.forEach(link => {
+          const active = link.dataset.page === activeId;
+
+          if (active) {
+            link.setAttribute("aria-current", "page");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+
+        document.title = activeId === "home"
+          ? "Sugirvas Senthilkumar"
+          : activeId.toUpperCase() +
+            " — Sugirvas Senthilkumar";
+
+        closeMenu();
+      }
+
+      menuToggle.addEventListener("click", () => {
+        if (document.body.classList.contains("menu-open")) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+          if (location.hash === link.getAttribute("href")) {
+            showPage();
+          }
+        });
+      });
+
+      window.addEventListener("hashchange", showPage);
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          closeMenu();
+        }
+      });
+
+      showPage();
+
+      /* STAGE 01 — SECURE BOOT */
 
       const tasks = [
         "initializing execution environment",
@@ -530,7 +847,7 @@
         enter.focus({ preventScroll: true });
       }
 
-      /* STAGE 02 — APPROVED TERMINAL LOGIN */
+      /* STAGE 02 — TERMINAL LOGIN */
 
       function createTerminalLine(prefix = "") {
         const line = document.createElement("div");
@@ -596,8 +913,6 @@
 
         boot.remove();
 
-        // Username: 0.15–1.80 seconds
-
         await waitUntil(start + 150);
 
         await typeWithin(
@@ -607,8 +922,6 @@
           1650
         );
 
-        // Silent password: 2.00–2.65 seconds
-
         await waitUntil(start + 2000);
 
         const password = createTerminalLine("Password: ");
@@ -616,8 +929,6 @@
 
         await waitUntil(start + 2650);
         passwordCursor.remove();
-
-        // Login success and welcome
 
         await waitUntil(start + 2750);
         createTerminalLine("");
@@ -627,8 +938,6 @@
         createTerminalLine(
           "Welcome, sugirvassenthilkumar!"
         );
-
-        // whoami: 3.40–4.70 seconds
 
         await waitUntil(start + 3400);
         createTerminalLine("");
@@ -644,18 +953,14 @@
 
         await waitUntil(start + LOGIN_DURATION);
 
-        // Directly reveal the portfolio.
-        // No Matrix transition.
-
         portfolio.classList.add("unlocked");
+        document.body.classList.add("site-ready");
         loginStage.classList.add("exit");
 
         await delay(reducedMotion ? 0 : 450);
 
         loginStage.remove();
 
-        // Move focus for accessibility without
-        // displaying a border around the homepage.
         portfolio.setAttribute("tabindex", "-1");
 
         portfolio.focus({
@@ -664,7 +969,7 @@
         });
       }
 
-      /* INTERACTION */
+      /* ENTER INTERACTION */
 
       function enterConsole() {
         if (!bootReady || loginStarted) return;
@@ -689,5 +994,6 @@
       runBoot();
     })();
   </script>
+
 </body>
 </html>
