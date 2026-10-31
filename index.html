@@ -39,9 +39,7 @@
       font-family: var(--mono);
     }
 
-    /* =========================================
-       PORTFOLIO
-    ========================================= */
+    /* PORTFOLIO */
 
     #portfolio {
       min-height: 100svh;
@@ -75,9 +73,7 @@
       animation: reveal .45s ease both;
     }
 
-    /* =========================================
-       TERMINAL STAGES
-    ========================================= */
+    /* TERMINAL STAGES */
 
     .terminal-stage {
       display: none;
@@ -157,9 +153,7 @@
       color: #999;
     }
 
-    /* =========================================
-       STAGE 01 — INLINE ASCII PROGRESS
-    ========================================= */
+    /* STAGE 01 — INLINE ASCII PROGRESS */
 
     .boot-task {
       display: grid;
@@ -186,9 +180,7 @@
       color: #fff;
     }
 
-    /* =========================================
-       ENTER PROMPT
-    ========================================= */
+    /* ENTER PROMPT */
 
     .prompt {
       display: none;
@@ -241,15 +233,12 @@
       from {
         opacity: 0;
       }
-
       to {
         opacity: 1;
       }
     }
 
-    /* =========================================
-       MOBILE
-    ========================================= */
+    /* MOBILE */
 
     @media (max-width: 650px) {
       .console {
@@ -292,9 +281,7 @@
 
 <body>
 
-  <!-- =======================================
-       STAGE 01 — SECURE BOOT
-  ======================================== -->
+  <!-- STAGE 01 — SECURE BOOT -->
 
   <section
     id="boot-stage"
@@ -308,9 +295,7 @@
 
         <div class="prompt" id="prompt">
           <div class="command">
-            <span class="command-prefix">
-              system@localhost:~$
-            </span>
+            <span class="command-prefix">system@localhost:~$</span>
             ./launch
           </div>
 
@@ -331,9 +316,7 @@
     </div>
   </section>
 
-  <!-- =======================================
-       STAGE 02 — TERMINAL LOGIN
-  ======================================== -->
+  <!-- STAGE 02 — TERMINAL LOGIN -->
 
   <section
     id="login-stage"
@@ -351,9 +334,7 @@
     </div>
   </section>
 
-  <!-- =======================================
-       PORTFOLIO
-  ======================================== -->
+  <!-- PORTFOLIO -->
 
   <main id="portfolio">
     <div>
@@ -366,9 +347,7 @@
     (() => {
       "use strict";
 
-      /* =====================================
-         ELEMENTS
-      ===================================== */
+      /* ELEMENTS */
 
       const boot =
         document.getElementById("boot-stage");
@@ -401,9 +380,7 @@
         "(prefers-reduced-motion: reduce)"
       ).matches;
 
-      /* =====================================
-         TIMING
-      ===================================== */
+      /* TIMING */
 
       const BOOT_DURATION = 5000;
       const LOGIN_DURATION = 5000;
@@ -417,12 +394,10 @@
           setTimeout(resolve, Math.max(0, ms))
         );
 
-      /* =====================================
-         STAGE 01 — BOOT TASKS
-      ===================================== */
+      /* STAGE 01 — BOOT TASKS */
 
-      // Visual-only simulated startup.
-      // No firmware or security checks occur.
+      // Simulated startup only.
+      // No actual firmware verification occurs.
 
       const tasks = [
         "initializing execution environment",
@@ -434,8 +409,6 @@
         "initializing terminal interface",
         "preparing application runtime"
       ];
-
-      // Varied timings, normalized to 5 seconds.
 
       const taskWeights = [
         1.12,
@@ -633,9 +606,7 @@
         enter.focus({ preventScroll: true });
       }
 
-      /* =====================================
-         STAGE 02 — TERMINAL HELPERS
-      ===================================== */
+      /* STAGE 02 — TERMINAL HELPERS */
 
       function createTerminalLine(prefix = "") {
         const line =
@@ -723,9 +694,7 @@
         }
       }
 
-      /* =====================================
-         STAGE 02 — FIVE-SECOND LOGIN
-      ===================================== */
+      /* STAGE 02 — FIVE-SECOND LOGIN */
 
       async function runLogin() {
         const start = performance.now();
@@ -739,28 +708,25 @@
 
         boot.remove();
 
-        // 0.00s–0.20s: fresh terminal
+        // 0.00–0.15s: fresh terminal
 
-        await waitUntil(start + 200);
+        await waitUntil(start + 150);
 
-        // 0.20s–2.30s: username
+        // 0.15–1.80s: username
 
         await typeWithin(
-          createTerminalLine(
-            "localhost login: "
-          ),
+          createTerminalLine("localhost login: "),
           "sugirvassenthilkumar",
-          start + 200,
-          2100
+          start + 150,
+          1650
         );
 
-        // 2.30s–2.55s: brief pause
+        // 1.80–2.00s: pause
 
-        await waitUntil(start + 2550);
+        await waitUntil(start + 2000);
 
-        // 2.55s–3.45s: silent password
-        // No password text, characters or
-        // credentials are generated or stored.
+        // 2.00–2.65s: silent simulated password
+        // No password is generated, stored, or transmitted.
 
         const passwordLine =
           createTerminalLine("Password: ");
@@ -768,32 +734,48 @@
         const passwordCursor =
           attachCursor(passwordLine);
 
-        await waitUntil(start + 3450);
+        await waitUntil(start + 2650);
 
         passwordCursor.remove();
 
-        // 3.45s–3.70s: terminal newline
+        // 2.65–2.90s: login confirmation
+
+        await waitUntil(start + 2750);
 
         createTerminalLine("");
 
-        await waitUntil(start + 3700);
+        createTerminalLine(
+          "Login successful!"
+        );
 
-        // 3.70s–4.70s: whoami
+        await waitUntil(start + 2900);
+
+        createTerminalLine(
+          "Welcome, sugirvassenthilkumar!"
+        );
+
+        // 2.90–3.40s: brief welcome display
+
+        await waitUntil(start + 3400);
+
+        createTerminalLine("");
+
+        // 3.40–4.70s: whoami typing
 
         await typeWithin(
           createTerminalLine(
             "sugirvassenthilkumar@localhost:~$ "
           ),
           "whoami",
-          start + 3700,
-          1000
+          start + 3400,
+          1300
         );
 
-        // 4.70s–5.00s: final pause
+        // 4.70–5.00s: final pause
 
         await waitUntil(start + LOGIN_DURATION);
 
-        // Reveal the portfolio automatically.
+        // Automatically reveal the portfolio.
 
         portfolio.classList.add("unlocked");
         loginStage.classList.add("exit");
@@ -812,9 +794,7 @@
         });
       }
 
-      /* =====================================
-         INTERACTION
-      ===================================== */
+      /* INTERACTION */
 
       function enterConsole() {
         if (!bootReady || loginStarted) {
